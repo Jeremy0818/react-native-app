@@ -1,9 +1,14 @@
 import React from 'react'
-import { View, Text, TouchableOpacity, Image } from 'react-native'
+import { 
+  View, 
+  Text, 
+  TouchableOpacity, 
+  Image 
+} from 'react-native'
 
 import styles from './popularjobcard.style'
 
-const PopularJobCard = ({ item }) => {
+const PopularJobCard = ({ item, selectedJob, handleCardPress }) => {
   return (
     <TouchableOpacity
       style={styles.container(selectedJob, item)}
@@ -22,7 +27,7 @@ const PopularJobCard = ({ item }) => {
         <Text style={styles.jobName(selectedJob, item)} numberOfLines={1}>
           {item.jon_title}
         </Text>
-        <Text style={styles.location}>{item.jon_country}</Text>
+        <Text style={styles.location}>{item.job_country}</Text>
       </View>
     </TouchableOpacity>
   )
