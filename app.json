@@ -8,6 +8,17 @@
       "expo-router"
     ],
     "name": "my-app",
-    "slug": "my-app"
+    "slug": "my-app",
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "e446a63a-c646-46da-a1ac-4072bdd429ab"
+      }
+    },
+    "ios": {
+      "bundleIdentifier": "com.expo-project.my-app"
+    }
   }
 }
