@@ -1,19 +1,21 @@
-import { useState } from 'react'
-import { View, ScrollView, SafeAreaView, Button } from 'react-native'
+import { useEffect } from 'react'
+import { SafeAreaView, TouchableOpacity, Text, View } from 'react-native'
 import { Stack, useRouter } from 'expo-router'
 
-import { COLORS, icons, images, SIZES } from '../constants'
-import { Nearbyjobs, Popularjobs, ScreenHeaderBtn, Welcome } from '../components'
+import { COLORS } from '../constants'
 import { AuthProvider, useAuth } from '../utils/AuthContext'
-
-import Overview from './Home'
-import Login from './Login'
-import Register from './Register'
+import styles from '../components/common/common.style';
+import AppLogo from '../components/logo/AppLogo'
 
 export default function Home() {
     const router = useRouter();
-    const [searchTerm, setSearchTerm] = useState("");
     const { user } = useAuth();
+
+    useEffect(() => {
+        if (user) {
+            router.replace('Overview');
+        }
+    }, [user]);
 
     return (
         <AuthProvider>
@@ -21,17 +23,25 @@ export default function Home() {
                 <Stack.Screen
                     options={{
                         headerStyle: { backgroundColor: COLORS.lightWhite },
-                        headerTitle: "Login"
+                        headerShadowVisible: false,
+                        headerTitle: "Landing",
                     }}
                 />
-                {user ? (
-                    // Render content for authenticated user
-                    // This could be your existing content
-                    <Overview />
-                ) : (
-                    // Render content for non-authenticated user
-                    <Login />
-                )}
+                <View style={styles.container}>
+                    <AppLogo />
+                    <TouchableOpacity
+                        onPress={() => router.push('Login')}
+                        style={styles.btn}
+                    >
+                        <Text>Go to Login</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => router.push('Register')}
+                        style={styles.btn}
+                    >
+                        <Text>Register an account</Text>
+                    </TouchableOpacity>
+                </View>
 
             </SafeAreaView>
         </AuthProvider>

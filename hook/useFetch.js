@@ -17,7 +17,6 @@ const useFetch = () => {
             setIsLoading(false);
         } catch (error) {
             setError(error);
-            alert('There is an error');
         } finally {
             setIsLoading(false);
         }

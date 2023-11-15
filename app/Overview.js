@@ -3,7 +3,7 @@ import { View, ScrollView, SafeAreaView, Button } from 'react-native'
 import { Stack, useRouter } from 'expo-router'
 
 import { COLORS, icons, images, SIZES } from '../constants'
-import { Nearbyjobs, Popularjobs, ScreenHeaderBtn, Welcome } from '../components'
+import { Nearbyjobs, Popularjobs, ScreenHeaderBtn, Welcome, BottomTabs } from '../components'
 
 export default function Overview() {
     const router = useRouter();
@@ -21,7 +21,7 @@ export default function Overview() {
                     headerRight: () => (
                         <ScreenHeaderBtn iconUrl={images.profile} dimension="100%" />
                     ),
-                    headerTitle: ""
+                    headerTitle: "",
                 }}
             />
 
@@ -30,6 +30,10 @@ export default function Overview() {
                     flex: 1,
                     padding: SIZES.medium
                 }}>
+                    <Button
+                        title="Go to Login"
+                        onPress={() => router.replace('Login')}
+                    />
                     <Welcome
                         searchTerm={searchTerm}
                         setSearchTerm={setSearchTerm}
@@ -43,10 +47,7 @@ export default function Overview() {
                     <Nearbyjobs />
                 </View>
             </ScrollView>
-            <Button
-                title="Go to Login"
-                onPress={() => router.replace('Login')}
-            />
+            <BottomTabs screenName={"Overview"} />
         </SafeAreaView>
     )
 }

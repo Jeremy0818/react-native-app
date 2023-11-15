@@ -1,56 +1,77 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet } from 'react-native';
+import { SafeAreaView, View, TextInput, TouchableOpacity, Text, Image } from 'react-native';
+import { Stack, useRouter } from 'expo-router';
+
 import { useAuth } from '../utils/AuthContext';
+import { COLORS, icons } from '../constants';
+import styles from '../components/common/common.style';
+
 
 const Register = ({ navigation }) => {
-  const { register } = useAuth();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+    const { register } = useAuth();
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
-  const handleRegister = async () => {
-    try {
-      // Call the register function from useAuth with email and password
-      await register(email, password);
-      // Navigate to the home screen after successful registration
-      navigation.navigate('Home');
-    } catch (error) {
-      console.error('Registration failed:', error.message);
-    }
-  };
+    const handleRegister = async () => {
+        try {
+            // Call the register function from useAuth with email and password
+            await register(email, password);
+            // Navigate to the home screen after successful registration
+            navigation.navigate('Home');
+        } catch (error) {
+            console.error('Registration failed:', error.message);
+        }
+    };
 
-  return (
-    <View style={styles.container}>
-      <TextInput
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        style={styles.input}
-      />
-      <TextInput
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-        style={styles.input}
-      />
-      <Button title="Register" onPress={handleRegister} />
-    </View>
-  );
+    return (
+        <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
+            <Stack.Screen
+                options={{
+                    headerStyle: { backgroundColor: COLORS.lightWhite },
+                    headerShadowVisible: false,
+                    headerTitle: "Register",
+                }}
+            />
+            <View style={styles.container}>
+                <View style={styles.inputContainer}>
+                    <View style={styles.inputWrapper}>
+                        <TextInput
+                            placeholder="Username"
+                            value={username}
+                            onChangeText={setUsername}
+                            style={styles.inputField}
+                        />
+                    </View>
+                    <View style={styles.inputWrapper}>
+                        <TextInput
+                            placeholder="Email"
+                            value={email}
+                            onChangeText={setEmail}
+                            style={styles.inputField}
+                        />
+                    </View>
+                    <View style={styles.inputWrapper}>
+                        <TextInput
+                            placeholder="Password"
+                            value={password}
+                            onChangeText={setPassword}
+                            secureTextEntry
+                            style={styles.inputField}
+                        />
+                    </View>
+
+                    <TouchableOpacity style={styles.btn} onPress={handleRegister}>
+                        <Image
+                            source={icons.chevronRight}
+                            resizeMode='contain'
+                            style={styles.searchBtnImage}
+                        />
+                    </TouchableOpacity>
+                </View>
+            </View>
+        </SafeAreaView>
+    );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    paddingHorizontal: 16,
-  },
-  input: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 16,
-    paddingHorizontal: 8,
-  },
-});
 
 export default Register;
