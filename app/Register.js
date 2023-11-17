@@ -7,7 +7,7 @@ import { COLORS, icons } from '../constants';
 import styles from '../components/common/common.style';
 
 
-const Register = ({ navigation }) => {
+const Register = () => {
     const { register } = useAuth();
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');

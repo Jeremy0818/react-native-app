@@ -2,6 +2,8 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import { host } from '../constants';
+
 // Function to store the JWT token in local storage
 export const storeToken = async (token, refreshToken) => {
     try {
@@ -27,8 +29,8 @@ export const removeToken = async () => {
 // Function to retrieve the JWT token from local storage
 export const getToken = async () => {
     try {
-        const token = AsyncStorage.getItem('jwtToken');
-        const refreshToken = AsyncStorage.getItem('jwtRefreshToken');
+        const token = await AsyncStorage.getItem('jwtToken');
+        const refreshToken = await AsyncStorage.getItem('jwtRefreshToken');
         return {token: token, refreshToken: refreshToken};
     } catch (error) {
         // Handle local storage error
@@ -41,7 +43,7 @@ export const getToken = async () => {
 const refreshAuthToken = async (refreshToken) => {
     try {
         // First, obtain the CSRF token
-        const csrfResponse = await axios.get('/api/get-csrf-token/');
+        const csrfResponse = await axios.get(host + '/api/get-csrf-token/');
         const csrfToken = csrfResponse.data.csrfToken;
 
         // Create custom headers with the refresh token and CSRF token
@@ -56,7 +58,7 @@ const refreshAuthToken = async (refreshToken) => {
         };
 
         // Send the POST request to refresh the token
-        const response = await axios.post('/api/token/refresh/', postData, {
+        const response = await axios.post(host + '/api/token/refresh/', postData, {
             headers: customHeaders,
         });
 

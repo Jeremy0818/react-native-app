@@ -34,7 +34,7 @@ export default function Overview() {
                         title="Go to Login"
                         onPress={() => router.replace('Login')}
                     />
-                    <Welcome
+                    {/* <Welcome
                         searchTerm={searchTerm}
                         setSearchTerm={setSearchTerm}
                         handleClick={() => {
@@ -44,7 +44,7 @@ export default function Overview() {
                         }}
                     />
                     <Popularjobs />
-                    <Nearbyjobs />
+                    <Nearbyjobs /> */}
                 </View>
             </ScrollView>
             <BottomTabs screenName={"Overview"} />

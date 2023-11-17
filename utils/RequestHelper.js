@@ -1,10 +1,12 @@
 import axios from 'axios';
 import { getToken, storeToken, removeToken, checkAuthToken } from './TokenManager';
 
+import { host } from '../constants';
+
 export const getUserInfo = async () => {
     try {
         // First, obtain the CSRF token
-        const csrfResponse = await axios.get('/api/get-csrf-token/');
+        const csrfResponse = await axios.get(host + '/api/get-csrf-token/');
         const csrfToken = csrfResponse.data.csrfToken;
 
         const { token, refreshToken } = await getToken();
@@ -17,7 +19,7 @@ export const getUserInfo = async () => {
         };
 
         // Send the POST request to refresh the token
-        const response = await axios.get('/api/get-user/', {
+        const response = await axios.get(host + '/api/get-user/', {
             headers: customHeaders,
         });
 
@@ -39,7 +41,7 @@ export const uploadImage = async (image) => {
         formData.append('image', image);
 
         // First, obtain the CSRF token
-        const csrfResponse = await axios.get('/api/get-csrf-token/');
+        const csrfResponse = await axios.get(host + '/api/get-csrf-token/');
         const csrfToken = csrfResponse.data.csrfToken;
 
         const { token, refreshToken } = await getToken();
@@ -50,7 +52,7 @@ export const uploadImage = async (image) => {
             'X-CSRFToken': csrfToken,
         };
 
-        const response = await axios.post('/api/ocr/', formData, {
+        const response = await axios.post(host + '/api/ocr/', formData, {
             headers: customHeaders,
         });
         const data = response.data;
@@ -70,7 +72,7 @@ export const uploadImage = async (image) => {
 export const saveTransactions = async (transactions) => {
     try {
         // First, obtain the CSRF token
-        const csrfResponse = await axios.get('/api/get-csrf-token/');
+        const csrfResponse = await axios.get(host + '/api/get-csrf-token/');
         const csrfToken = csrfResponse.data.csrfToken;
 
         const { token, refreshToken } = await getToken();
@@ -103,7 +105,7 @@ export const saveTransactions = async (transactions) => {
 export const getAllAccount = async () => {
     try {
         // First, obtain the CSRF token
-        const csrfResponse = await axios.get('/api/get-csrf-token/');
+        const csrfResponse = await axios.get(host + '/api/get-csrf-token/');
         const csrfToken = csrfResponse.data.csrfToken;
 
         const { token, refreshToken } = await getToken();
@@ -115,7 +117,7 @@ export const getAllAccount = async () => {
             'X-CSRFToken': csrfToken,
         };
 
-        const response = await axios.get('/api/account/', {
+        const response = await axios.get(host + '/api/account/', {
             headers: customHeaders,
         });
         
@@ -136,7 +138,7 @@ export const getAllAccount = async () => {
 export const getAccount = async (id) => {
     try {
         // First, obtain the CSRF token
-        const csrfResponse = await axios.get('/api/get-csrf-token/');
+        const csrfResponse = await axios.get(host + '/api/get-csrf-token/');
         const csrfToken = csrfResponse.data.csrfToken;
 
         const { token, refreshToken } = await getToken();
@@ -148,7 +150,7 @@ export const getAccount = async (id) => {
             'X-CSRFToken': csrfToken,
         };
 
-        const response = await axios.get('/api/account/'+id+'/', {
+        const response = await axios.get(host + '/api/account/'+id+'/', {
             headers: customHeaders,
         });
         
@@ -165,3 +167,34 @@ export const getAccount = async (id) => {
         return;
     }
 }
+
+
+export const login = async (username, password) => {
+    try {
+        // Fetch the CSRF token
+        const response = await axios.get(host + '/api/get-csrf-token/');
+        const csrfToken = response.data.csrfToken;
+
+        // Include the CSRF token in your requests
+        const loginResponse = await axios.post(host + '/api/login/',
+            JSON.stringify({ username, password }),
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken, // Include the token in the request headers
+                },
+            }
+        );
+
+        if (loginResponse.status === 200) {
+            // Login successful
+            return {data: loginResponse.data, error: null};
+        } else {
+            // Login failed
+            throw {data: null, error: new Error('Login failed')};
+        }
+    } catch (error) {
+        // Handle login error
+        return {data: null, error: error};
+    }
+};

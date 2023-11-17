@@ -5,62 +5,26 @@ import { Stack, useRouter } from 'expo-router'
 import { useAuth } from '../utils/AuthContext';
 import { COLORS, icons } from '../constants';
 import styles from '../components/common/common.style';
+import { login } from '../utils/RequestHelper';
 
-const Login = ({ navigation }) => {
+const Login = () => {
     const router = useRouter();
-    const { login, logout } = useAuth();
+    const { cacheToken, clearToken } = useAuth();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [loginStatus, setLoginStatus] = useState(null);
 
-    // useEffect(() => {
-    //     logout();
-    // }, []);
+    useEffect(() => {
+        clearToken();
+    }, []);
 
-    const handleLogin = () => {
-        router.replace('Overview');
-        // Fetch the CSRF token
-        // fetch('/api/get-csrf-token/')
-        //     .then((response) => response.json())
-        //     .then((data) => {
-        //         const csrfToken = data.csrfToken;
-
-        //         // Include the CSRF token in your requests
-        //         fetch('/api/login/', {
-        //             method: 'POST',
-        //             headers: {
-        //                 'Content-Type': 'application/json',
-        //                 'X-CSRFToken': csrfToken, // Include the token in the request headers
-        //             },
-        //             body: JSON.stringify({ username, password }),
-        //         })
-        //             .then(async (response) => {
-        //                 if (response.ok) {
-        //                     // Login successful
-        //                     setLoginStatus('success');
-        //                     console.log("logging in ...");
-        //                     data = response.json().then(async (data) => {
-        //                         // Set individual field errors
-        //                         console.log(data.access, data.refresh, data.user);
-        //                         await login(data.access, data.refresh, data.user);
-        //                         router.replace('Home');
-        //                     }).catch((error) => {
-        //                         // Handle login error
-        //                         console.error('Login error:', error);
-        //                         setLoginStatus('error');
-        //                     });
-
-        //                 } else {
-        //                     // Login failed
-        //                     setLoginStatus('error');
-        //                 }
-        //             })
-        //             .catch((error) => {
-        //                 // Handle login error
-        //                 console.error('Login error:', error);
-        //                 setLoginStatus('error');
-        //             });
-        //     });
+    const handleLogin = async () => {
+        let result = await login(username, password, login);
+        if (result.error) {
+            alert(result.error);
+        } else {
+            await cacheToken(result.data.access, result.data.refresh, result.data.user);
+            router.replace("Overview");
+        }
     };
 
     return (
@@ -74,17 +38,19 @@ const Login = ({ navigation }) => {
             />
             <View style={styles.container}>
                 <View style={styles.inputContainer}>
+                    <Text>Username or Email</Text>
                     <View style={styles.inputWrapper}>
                         <TextInput
-                            placeholder="Username"
+                            placeholder="Enter your username or email"
                             value={username}
                             onChangeText={setUsername}
                             style={styles.inputField}
                         />
                     </View>
+                    <Text>Password</Text>
                     <View style={styles.inputWrapper}>
                         <TextInput
-                            placeholder="Password"
+                            placeholder="Enter your password"
                             value={password}
                             onChangeText={setPassword}
                             secureTextEntry

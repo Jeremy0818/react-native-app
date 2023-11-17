@@ -9,16 +9,15 @@ import AppLogo from '../components/logo/AppLogo'
 
 export default function Home() {
     const router = useRouter();
-    const { user } = useAuth();
+    const { user, isAuthenticated } = useAuth();
 
     useEffect(() => {
-        if (user) {
+        if (isAuthenticated()) {
             router.replace('Overview');
         }
     }, [user]);
 
     return (
-        <AuthProvider>
             <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
                 <Stack.Screen
                     options={{
@@ -44,6 +43,5 @@ export default function Home() {
                 </View>
 
             </SafeAreaView>
-        </AuthProvider>
     )
 }

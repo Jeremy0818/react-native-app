@@ -2,6 +2,7 @@ import { Stack } from "expo-router";
 import { useCallback } from "react";
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
+import { AuthProvider, useAuth } from "../utils/AuthContext";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -20,5 +21,9 @@ export default function Layout() {
 
     if (!fontsLoaded) return null;
 
-    return <Stack onLayout={onLayoutRootView} />
+    return (
+        <AuthProvider>
+            <Stack onLayout={onLayoutRootView} />
+        </AuthProvider>
+    )
 }

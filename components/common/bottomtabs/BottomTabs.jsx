@@ -7,14 +7,18 @@ import { COLORS } from '../../../constants';
 const BottomTabs = ({ screenName }) => {
     const router = useRouter();
 
+    const handlePress = (tabName) => {
+        if (screenName !== tabName) router.replace(tabName);
+    }
+
     return (
         <View style={styles.container}>
-            <TouchableOpacity style={styles.tab} onPress={() => router.replace('Overview')}>
+            <TouchableOpacity style={styles.tab} onPress={() => handlePress("Overview")}>
                 <Ionicons name="home" size={24} color={screenName == "Overview" ? "black" : "grey"} />
                 <Text>Home</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.tab} onPress={() => router.replace('Settings')}>
+            <TouchableOpacity style={styles.tab} onPress={() => handlePress("Settings")}>
                 <Ionicons name="settings" size={24} color={screenName == "Settings" ? "black" : "grey"} />
                 <Text>Profile</Text>
             </TouchableOpacity>

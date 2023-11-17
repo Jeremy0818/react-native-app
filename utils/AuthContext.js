@@ -31,14 +31,12 @@ function AuthProvider({ children }) {
     loadUserFromToken();
   }, []);
 
-  // Login function
-  const login = async (token, refreshToken, userInfo) => {
+  const cacheToken = async (token, refreshToken, userInfo) => {
     setUser({ token, refreshToken, userInfo });
     await storeToken(token, refreshToken);
   };
 
-  // Logout function
-  const logout = async () => {
+  const clearToken = async () => {
     setUser(null);
     removeToken();
   };
@@ -55,7 +53,7 @@ function AuthProvider({ children }) {
     } catch (error) {
       // Handle token refresh failure (e.g., user needs to log in again)
       console.log("Refresh token failed: ", error);
-      logout();
+      clearToken();
     }
   };
 
@@ -75,7 +73,7 @@ function AuthProvider({ children }) {
   }, [user?.token]);
 
   return (
-    <AuthContext.Provider value={{ user, isLoading, login, logout, isAuthenticated }}>
+    <AuthContext.Provider value={{ user, isLoading, cacheToken, clearToken, isAuthenticated }}>
       {children}
     </AuthContext.Provider>
   );
