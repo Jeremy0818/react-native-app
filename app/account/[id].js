@@ -1,8 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { View, Text, SafeAreaView, ScrollView, ActivityIndicator, RefreshControl } from 'react-native'
 import { Stack, useRouter, useLocalSearchParams } from 'expo-router'
-// import { Company, JobAbout, JobFooter, JobTabs, ScreenHeaderBtn, Specifics } from '../../components'
-import { AccountTabs, Transaction, AccountFooter, ScreenHeaderBtn } from '../../components'
+import { AccountTabs, Transaction, AccountFooter, SlidingMenu } from '../../components'
 import { COLORS, icons, SIZES } from '../../constants'
 import { getAccount } from '../../utils/RequestHelper'
 import { useAuth } from '../../utils/AuthContext'
@@ -154,9 +153,10 @@ const AccountDetails = () => {
                         </View>
                     )}
                 </ScrollView>
+                <SlidingMenu />
 
                 {/* <JobFooter url={data[0]?.job_google_link ?? 'https://careers.gogole.com/jobs/results'}/> */}
-                <AccountFooter url={''} />
+                {/* <AccountFooter url={''} /> */}
             </>
         </SafeAreaView>
     )
