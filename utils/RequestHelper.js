@@ -29,7 +29,7 @@ export const getUserInfo = async () => {
         return response.data.user; // Return the new access token
     } catch (error) {
         // Handle token refresh failure
-        console.error(error);
+        console.log(error);
         throw error;
     }
 };

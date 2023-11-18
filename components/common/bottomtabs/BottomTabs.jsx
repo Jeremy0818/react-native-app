@@ -20,7 +20,7 @@ const BottomTabs = ({ screenName }) => {
 
             <TouchableOpacity style={styles.tab} onPress={() => handlePress("Settings")}>
                 <Ionicons name="settings" size={24} color={screenName == "Settings" ? "black" : "grey"} />
-                <Text>Profile</Text>
+                <Text>Settings</Text>
             </TouchableOpacity>
         </View>
     );

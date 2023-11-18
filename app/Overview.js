@@ -1,13 +1,20 @@
-import { useState } from 'react'
+import { useEffect } from 'react'
 import { View, ScrollView, SafeAreaView, Button } from 'react-native'
 import { Stack, useRouter } from 'expo-router'
 
 import { COLORS, icons, images, SIZES } from '../constants'
-import { Nearbyjobs, Popularjobs, ScreenHeaderBtn, Welcome, BottomTabs } from '../components'
+import { Accounts, ScreenHeaderBtn, BottomTabs } from '../components'
+import { useAuth } from '../utils/AuthContext'
 
 export default function Overview() {
     const router = useRouter();
-    const [searchTerm, setSearchTerm] = useState("");
+    const { isAuthenticated } = useAuth();
+
+    useEffect(() => {
+        if (!isAuthenticated()) {
+            router.replace("");
+        }
+    }, []);
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
@@ -21,7 +28,8 @@ export default function Overview() {
                     headerRight: () => (
                         <ScreenHeaderBtn iconUrl={images.profile} dimension="100%" />
                     ),
-                    headerTitle: "",
+                    headerTitle: "Overview",
+                    animation: "none",
                 }}
             />
 
@@ -30,10 +38,7 @@ export default function Overview() {
                     flex: 1,
                     padding: SIZES.medium
                 }}>
-                    <Button
-                        title="Go to Login"
-                        onPress={() => router.replace('Login')}
-                    />
+                    <Accounts />
                     {/* <Welcome
                         searchTerm={searchTerm}
                         setSearchTerm={setSearchTerm}
