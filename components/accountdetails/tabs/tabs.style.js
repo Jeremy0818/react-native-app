@@ -6,6 +6,8 @@ const styles = StyleSheet.create({
   container: {
     marginTop: SIZES.small,
     marginBottom: SIZES.small / 2,
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
   },
   btn: (name, activeTab) => ({
     paddingVertical: SIZES.medium,
@@ -15,6 +17,8 @@ const styles = StyleSheet.create({
     marginLeft: 2,
     ...SHADOWS.medium,
     shadowColor: COLORS.white,
+    width: 100,
+    height: 50,
   }),
   btnText: (name, activeTab) => ({
     fontFamily: "DMMedium",

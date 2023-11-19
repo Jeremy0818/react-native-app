@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { View, Text, SafeAreaView, ScrollView, ActivityIndicator, RefreshControl } from 'react-native'
+import { View, Text, SafeAreaView, ScrollView, ActivityIndicator, RefreshControl, StyleSheet } from 'react-native'
 import { Stack, useRouter, useLocalSearchParams } from 'expo-router'
 import { AccountTabs, Transaction, AccountFooter, SlidingMenu } from '../../components'
-import { COLORS, icons, SIZES } from '../../constants'
+import { COLORS, icons, SIZES, FONT } from '../../constants'
 import { getAccount } from '../../utils/RequestHelper'
 import { useAuth } from '../../utils/AuthContext'
 
@@ -67,26 +67,6 @@ const AccountDetails = () => {
         }
     }
 
-    const displayTabContent = () => {
-        switch (activeTab) {
-            case "Income":
-                return <Transaction
-                    title={"Income"}
-                    data={"No data provided"}
-                />
-            case "Expense":
-                return <Transaction
-                    title={"Income"}
-                    data={"No data provided"}
-                />
-            case "Transfer":
-                return <Transaction
-                    title={"Income"}
-                    data={"No data provided"}
-                />
-        }
-    }
-
     const onRefresh = useCallback(() => {
         setRefreshing(true);
         getAccountInfo();
@@ -97,69 +77,69 @@ const AccountDetails = () => {
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
             <Stack.Screen
                 options={{
-                    // header: { backgroundColor: COLORS.lightWhite },
-                    // headerShadowVisible: false,
-                    // headerBackVisible: false,
-                    // headerLeft: () => (
-                    //     <ScreenHeaderBtn
-                    //         iconUrl={icons.left}
-                    //         dimension="60%"
-                    //         handlePress={() => router.back()}
-                    //     />
-                    // ),
+                    headerStyle: { backgroundColor: COLORS.lightWhite },
+                    headerShadowVisible: false,
                     // headerRight: () => (
                     //     <ScreenHeaderBtn
-                    //         iconUrl={icons.share}
+                    //         iconUrl={icons.share} // edit
                     //         dimension="60%"
                     //     />
                     // ),
-                    // headerTitle: ''
+                    headerTitle: account ? account.account_name : ''
                 }}
             />
 
-            <>
-                <ScrollView
-                    showsVerticalScrollIndicator={false}
-                    refreshControl={
-                        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-                    }
-                >
-                    {isLoading ? (
-                        <ActivityIndicator size="large" color={COLORS.primary} />
-                    ) : error ? (
-                        <Text>Something went wrong</Text>
-                    ) : (
-                        <View style={{ padding: SIZES.medium, paddingBottom: 100 }}>
-                            {/* <Company
-                                companyLogo={data[0].employer_logo}
-                                jobTitle={data[0].job_title}
-                                companyName={data[0].employer_name}
-                                location={data[0].job_country}
-                            />
-                            <JobTabs
-                                tabs={tabs}
-                                activeTab={activeTab}
-                                setActiveTab={setActiveTab}
-                            /> */}
-                            <Text>{account.account_name}</Text>
-                            <Text>{account.balance}</Text>
-                            <AccountTabs
-                                tabs={tabs}
-                                activeTab={activeTab}
-                                setActiveTab={setActiveTab}
-                            />
 
-                            {displayTabContent()}
-                        </View>
-                    )}
-                </ScrollView>
-                <SlidingMenu />
+            {isLoading ? (
+                <ActivityIndicator size="large" color={COLORS.primary} />
+            ) : error ? (
+                <Text>Something went wrong</Text>
+            ) : (
+                <>
+                    <Text style={styles.headText}>{account.balance}</Text>
+                    <AccountTabs
+                        tabs={tabs}
+                        activeTab={activeTab}
+                        setActiveTab={setActiveTab}
+                    />
+                    <ScrollView
+                        showsVerticalScrollIndicator={false}
+                        refreshControl={
+                            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                        }
+                    >
+                        {
+                            activeTab == "Expense" ?
+                                <Transaction
+                                    title={activeTab}
+                                    data={expenses}
+                                />
+                                : activeTab == "Income" ?
+                                    <Transaction
+                                        title={activeTab}
+                                        data={incomes}
+                                    />
+                                    :
+                                    <Transaction
+                                        title={activeTab}
+                                        data={[]}
+                                    />
+                        }
+                    </ScrollView>
+                    <SlidingMenu />
+                </>
+            )}
 
-                {/* <JobFooter url={data[0]?.job_google_link ?? 'https://careers.gogole.com/jobs/results'}/> */}
-                {/* <AccountFooter url={''} /> */}
-            </>
         </SafeAreaView>
     )
 }
+
+const styles = StyleSheet.create({
+    headText: {
+        fontSize: SIZES.large,
+        color: COLORS.primary,
+        fontFamily: FONT.bold,
+    },
+});
 
 export default AccountDetails;
