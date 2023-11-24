@@ -12,7 +12,7 @@ const CustomBackdrop = ({ animatedIndex, style }) => {
     opacity: interpolate(
       animatedIndex.value,
       [-1, 0],
-      [0, 1],
+      [0, 0.8],
       Extrapolate.CLAMP
     ),
   }));

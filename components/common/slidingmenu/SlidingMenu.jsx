@@ -4,7 +4,7 @@ import BottomSheet, { BottomSheetModal, BottomSheetModalProvider, BottomSheetVie
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { SIZES, COLORS, FONT } from "../../../constants";
-import { AccountFooter } from "../..";
+import { default as AccountFooter } from "../../accountdetails/footer/Footer";
 import CustomBackdrop from "./CustomBackdrop";
 
 const SlidingMenu = () => {

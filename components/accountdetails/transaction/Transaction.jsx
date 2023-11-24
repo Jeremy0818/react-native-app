@@ -18,7 +18,7 @@ const Transaction = ({ title, data }) => {
             <View style={styles.contentBox}>
                 {
                     data.length !== 0 ?
-                        data.map((item) => (
+                        data.map((item, index) => (
                             <TransactionCard
                                 transaction={item}
                                 selectedTransaction={selectedTransaction}
