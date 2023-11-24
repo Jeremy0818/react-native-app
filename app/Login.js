@@ -45,6 +45,7 @@ const Login = () => {
                             value={username}
                             onChangeText={setUsername}
                             style={styles.inputField}
+                            autoCapitalize='none'
                         />
                     </View>
                     <Text>Password</Text>

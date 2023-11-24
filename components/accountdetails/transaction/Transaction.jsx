@@ -14,12 +14,12 @@ const Transaction = ({ title, data }) => {
 
     return (
         <View style={styles.container}>
-            {/* <Text style={styles.headText}>{title}</Text> */}
             <View style={styles.contentBox}>
                 {
-                    data.length !== 0 ?
+                    data.length > 0 ?
                         data.map((item, index) => (
                             <TransactionCard
+                                key={index}
                                 transaction={item}
                                 selectedTransaction={selectedTransaction}
                                 handleCardPress={handleCardPress}

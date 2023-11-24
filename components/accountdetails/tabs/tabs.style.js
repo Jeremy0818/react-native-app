@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
   },
   btn: (name, activeTab) => ({
-    paddingVertical: SIZES.medium,
+    paddingVertical: SIZES.xSmall,
     paddingHorizontal: SIZES.xLarge,
     backgroundColor: name === activeTab ? COLORS.primary : "#F3F4F8",
     borderRadius: SIZES.medium,
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     ...SHADOWS.medium,
     shadowColor: COLORS.white,
     width: 100,
-    height: 50,
+    height: 40,
   }),
   btnText: (name, activeTab) => ({
     fontFamily: "DMMedium",

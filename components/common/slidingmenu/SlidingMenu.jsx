@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
         // paddingTop: "100%",
         // padding: 24,
         justifyContent: 'center',
-        // backgroundColor: 'grey',
+        backgroundColor: COLORS.lightWhite,
     },
     sheetContainer: {
         // add horizontal space

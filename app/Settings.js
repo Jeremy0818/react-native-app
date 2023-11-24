@@ -20,6 +20,7 @@ export default function Overview() {
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
             <Stack.Screen
                 options={{
+                    headerStyle: { backgroundColor: COLORS.lightWhite },
                     headerLeft: () => <></>,
                     headerTitle: "Settings",
                     animation: "none"
