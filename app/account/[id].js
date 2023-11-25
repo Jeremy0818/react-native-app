@@ -16,6 +16,9 @@ const ContentView = ({ item, index, refreshing, onRefresh, setActiveTab }) => {
     return (
         <>
             <ScrollView
+                style={{
+                    height: Dimensions.get('window').height * 0.5,
+                }}
                 showsVerticalScrollIndicator={false}
                 refreshControl={
                     <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />

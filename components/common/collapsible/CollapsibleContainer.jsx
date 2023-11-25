@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { LayoutChangeEvent, View, Text } from "react-native";
+import { LayoutChangeEvent, View, Text, Dimensions } from "react-native";
 import Animated, {
     useAnimatedStyle,
     useSharedValue,
@@ -20,15 +20,20 @@ export const CollapsableContainer = ({ children, expanded, }) => {
 
     const collapsableStyle = useAnimatedStyle(() => {
         animatedHeight.value = expanded ? withTiming(height) : withTiming(0);
+        // let display = animatedHeight.value > 0 ? "flex" : "none";
 
         return {
             height: animatedHeight.value,
+            // display: display,
+            overflow: expanded ? "visible" : "hidden",
         };
     }, [expanded, height]);
 
     return (
-        <Animated.View style={[collapsableStyle, { overflow: "hidden" }]}>
-            <View style={{ position: "absolute" }} onLayout={onLayout}>
+        <Animated.View style={[collapsableStyle, ]}>
+            {/* { overflow: "hidden" } */}
+            <View style={{ position: "absolute", left: -Dimensions.get('window').width * 0.4, width: Dimensions.get('window').width * 0.8 }} onLayout={onLayout}> 
+            {/* left: -Dimensions.get('window').width *0.5, width: Dimensions.get('window').width */}
                 {children}
             </View>
         </Animated.View>

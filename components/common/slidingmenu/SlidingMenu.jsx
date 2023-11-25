@@ -10,7 +10,7 @@ import CustomBackdrop from "./CustomBackdrop";
 const SlidingMenu = () => {
     // hooks
     const sheetRef = useRef(null);
-    const insets = useSafeAreaInsets(); 
+    const insets = useSafeAreaInsets();
 
     // variables
     const snapPoints = useMemo(() => ["42%"], []);
@@ -50,7 +50,7 @@ const SlidingMenu = () => {
 
     const handlePresentModalPress = useCallback(() => {
         sheetRef.current?.present();
-      }, []);
+    }, []);
 
     // render
     return (
@@ -70,7 +70,13 @@ const SlidingMenu = () => {
                     detached={true}
                     style={styles.sheetContainer}
                     bottomInset={insets.bottom}
-                    backdropComponent={CustomBackdrop}
+                    backdropComponent={({ animatedIndex, style }) => (
+                        <CustomBackdrop
+                            animatedIndex={animatedIndex}
+                            style={style}
+                            onPress={handleClosePress}
+                        />
+                    )}
                 >
                     <View>
                         {renderOptions()}
@@ -99,7 +105,7 @@ const styles = StyleSheet.create({
     sheetContainer: {
         // add horizontal space
         marginHorizontal: 24,
-      },
+    },
     option: {
         // flex: 1,
         backgroundColor: "#FE7654",

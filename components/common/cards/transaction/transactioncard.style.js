@@ -1,58 +1,116 @@
 import { StyleSheet } from "react-native";
 
 import { COLORS, FONT, SHADOWS, SIZES } from "../../../../constants";
-
 const styles = StyleSheet.create({
-  container: (selectedAccount, account) => ({
-    width: 250,
-    padding: SIZES.xLarge,
-    backgroundColor: selectedAccount === account.id ? COLORS.primary : "#FFF",
+  wrapper: {
+    backgroundColor: "white",
+    borderRadius: 10,
+    // flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    // margin: 20,
+    marginBottom: 15,
+    marginLeft: 10,
+    marginRight: 10,
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+    elevation: 5,
+  },
+  container: {
+    // width: 300,
+    // height: 80,
+    // backgroundColor: "white",
+    // borderRadius: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    // margin: 20,
+    // marginBottom: 15,
+    // marginLeft: 10,
+    // marginRight: 10,
+    // shadowColor: 'black',
+    // shadowOffset: { width: 0, height: 2 },
+    // shadowOpacity: 0.1,
+    // shadowRadius: 10,
+    // elevation: 5,
+  },
+  editContainer: {
+    height: 450,
+  },
+  editTextWrapper: {
+    alignItems: 'flex-start',
+  },
+  editText: {
+    fontSize: 16,
+    color: 'black',
+  },
+  inputField: {
+    fontFamily: FONT.regular,
+    width: 300,
+    paddingHorizontal: SIZES.medium,
+  },
+  inputDateWrapper: {
+    flex: 1,
+    marginRight: SIZES.small,
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: SIZES.medium,
-    justifyContent: "space-between",
-    ...SHADOWS.medium,
-    shadowColor: COLORS.white,
-  }),
-  logoContainer: (selectedJob, item) => ({
-    width: 50,
+    margin: 10,
     height: 50,
-    backgroundColor: selectedJob === item.job_id ? "#FFF" : COLORS.white,
+  },
+  inputWrapper: {
+    flex: 1,
+    backgroundColor: COLORS.white,
+    marginRight: SIZES.small,
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: SIZES.medium,
-    justifyContent: "center",
-    alignItems: "center",
-  }),
-  logoImage: {
-    width: "70%",
-    height: "70%",
+    margin: 10,
+    height: 60,
   },
-  accountName: {
-    fontSize: SIZES.medium,
-    fontFamily: FONT.regular,
-    color: "#B3AEC6",
-    marginTop: SIZES.small / 1.5,
+  iconLeft: {
+    width: 80,
+    height: 80,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  infoContainer: {
-    marginTop: SIZES.large,
+  iconRight: {
+    width: 40,
+    height: 80,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  accountBalance: (selectedAccount, account) => ({
-    fontSize: SIZES.large,
-    fontFamily: FONT.medium,
-    color: selectedAccount === account.id ? COLORS.white : COLORS.primary,
-  }),
-  infoWrapper: {
-    flexDirection: "row",
-    marginTop: 5,
-    justifyContent: "flex-start",
-    alignItems: "center",
+  content: {
+    flex: 1,
+    height: 80,
+    justifyContent: 'center',
+    paddingLeft: 10,
   },
-  publisher: (selectedJob) => ({
-    fontSize: SIZES.medium - 2,
-    fontFamily: FONT.bold,
-    color: selectedJob === item.job_id ? COLORS.white : COLORS.primary,
-  }),
-  location: {
-    fontSize: SIZES.medium - 2,
-    fontFamily: FONT.regular,
-    color: "#B3AEC6",
+  title: {
+    fontSize: 16,
+    // fontWeight: 'bold',
+    color: 'black',
+  },
+  amount: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'black',
+  },
+  date: {
+    width: 80,
+    // height: 80,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 10,
+  },
+  dateText: {
+    fontSize: 16,
+    color: 'black',
+  },
+  yearText: {
+    fontSize: 12,
+    color: 'black',
   },
 });
 
