@@ -13,12 +13,22 @@ const SLIDER_WIDTH = Dimensions.get('window').width;
 const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 1);
 
 const ContentView = ({ item, index, refreshing, onRefresh, setActiveTab }) => {
+    const scrollViewRef = useRef(null);
+
     return (
-        <>
+        <View style={{
+            height: Dimensions.get('window').height * 0.6,
+            backgroundColor: COLORS.white,
+            borderRadius: 10,
+            margin: 8,
+            shadowColor: 'black',
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.1,
+            shadowRadius: 10,
+            elevation: 5,
+        }}>
             <ScrollView
-                style={{
-                    height: Dimensions.get('window').height * 0.5,
-                }}
+                ref={scrollViewRef}
                 showsVerticalScrollIndicator={false}
                 refreshControl={
                     <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -26,9 +36,10 @@ const ContentView = ({ item, index, refreshing, onRefresh, setActiveTab }) => {
             >
                 <Transaction
                     data={item}
+                    scrollViewRef={scrollViewRef}
                 />
             </ScrollView>
-        </>
+        </View>
     )
 }
 
@@ -63,7 +74,7 @@ const AccountDetails = () => {
 
     useEffect(() => {
         if (isCarousel && isCarousel.current && isCarousel.current.currentIndex !== activeTab) {
-            isCarousel.current.snapToItem (activeTab, animated = true, fireCallback = true)
+            isCarousel.current.snapToItem(activeTab, animated = true, fireCallback = true)
         }
     }, [activeTab]);
 
@@ -135,12 +146,13 @@ const AccountDetails = () => {
                 <Text>Something went wrong</Text>
             ) : (
                 <>
-                    <Text style={styles.headText}>{account?.balance}</Text>
+                    <Text style={{...styles.headText, textAlign: 'center', }}>{account?.balance}</Text>
                     <AccountTabs
                         tabs={tabs}
                         activeTab={activeTab}
                         setActiveTab={setActiveTab}
                     />
+                    <Text style={{ ...styles.headText, textAlign: 'center', }}>Transaction history</Text>
                     <Carousel
                         layout="default"
                         layoutCardOffset={9}

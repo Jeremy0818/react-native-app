@@ -1,11 +1,13 @@
-import React, { useState, } from 'react';
-import { View, Text, TextInput, Image, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { View, Text, TextInput, Image, StyleSheet, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import RNPickerSelect, { defaultStyles } from 'react-native-picker-select';
 
 import styles from './transactioncard.style';
 import { CollapsableContainer } from '../../collapsible/CollapsibleContainer';
+import { COLORS, FONT, SHADOWS, SIZES } from "../../../../constants";
 
 const LeftSwipeActions = () => {
     return (
@@ -40,26 +42,13 @@ const rightSwipeActions = () => {
     );
 };
 
-const TransactionCard = ({ transaction, selectedTransaction, handleCardPress }) => {
+const TransactionCard = ({ scrollViewRef, transaction, selectedTransaction, handleCardPress }) => {
     const [expanded, setExpanded] = useState(false);
-    const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
     const [selectedDate, setSelectedDate] = useState(new Date(transaction.date));
+    const [account, setAccount] = useState(transaction.account);
 
-    const onItemPress = () => {
+    const onItemPress = (event) => {
         setExpanded(!expanded);
-    };
-
-    const showDateTimePicker = () => setIsDatePickerVisible(true);
-
-    const hideDateTimePicker = () => setIsDatePickerVisible(false);
-
-    const handleDatePicked = (pickeddate) => {
-        day = pickeddate.getDate();
-        month = pickeddate.getMonth();
-        year = pickeddate.getFullYear();
-        console.log('A date has been picked: ' + day + '-' + month + '-' + year);
-        setSelectedDate(pickeddate);
-        hideDateTimePicker();
     };
 
     function formatDateDayMonth(inputDate) {
@@ -81,7 +70,9 @@ const TransactionCard = ({ transaction, selectedTransaction, handleCardPress }) 
             renderRightActions={rightSwipeActions}
         >
             <View style={styles.wrapper} >
-                <TouchableWithoutFeedback onPress={onItemPress}>
+                <TouchableWithoutFeedback
+                    onPress={(event) => onItemPress(event)}
+                >
                     <View style={styles.container}>
                         <View style={styles.iconLeft}>
                             <Ionicons name="image" size={24} color={"black"} />
@@ -128,10 +119,6 @@ const TransactionCard = ({ transaction, selectedTransaction, handleCardPress }) 
                             <Text style={styles.editText}>Date</Text>
                         </View>
                         <View style={styles.inputDateWrapper}>
-                            {/* <TextInput
-                                onFocus={showDateTimePicker}
-                                value={selectedDate.toDateString()}
-                            /> */}
                             <DateTimePicker
                                 mode='date'
                                 value={selectedDate}
@@ -163,11 +150,41 @@ const TransactionCard = ({ transaction, selectedTransaction, handleCardPress }) 
                             <Text style={styles.editText}>Account Paid</Text>
                         </View>
                         <View style={styles.inputWrapper}>
-                            <TextInput
+                            {/* <TextInput
                                 value={transaction.account}
                                 onChangeText={() => { }}
                                 style={styles.inputField}
+                            /> */}
+                            <RNPickerSelect
+                                style={pickerSelectStyles}
+                                placeholder={{}}
+                                items={[
+                                    { label: 'Cash', value: 'Cash' },
+                                    { label: 'Savings', value: 'Savings' },
+                                    { label: 'Credit Card', value: 'Credit Card' },
+                                ]}
+                                onValueChange={setAccount}
+                                value={account}
+                                useNativeAndroidPickerStyle={false}
                             />
+                        </View>
+                        <View style={styles.btnContainer}>
+                            <TouchableOpacity
+                                style={styles.btn}
+                                onPress={() => {
+                                    setExpanded(!expanded);
+                                }}
+                            >
+                                <Text style={styles.btnText}>Save</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={styles.btn}
+                                onPress={() => {
+                                    setExpanded(!expanded);
+                                }}
+                            >
+                                <Text style={styles.btnText}>Cancel</Text>
+                            </TouchableOpacity>
                         </View>
                     </View>
                 </CollapsableContainer>
@@ -177,6 +194,17 @@ const TransactionCard = ({ transaction, selectedTransaction, handleCardPress }) 
     );
 };
 
-
-
 export default TransactionCard;
+
+const pickerSelectStyles = StyleSheet.create({
+    inputIOS: {
+        fontFamily: FONT.regular,
+        // width: 300,
+        textAlign: 'center',
+    },
+    inputAndroid: {
+        fontFamily: FONT.regular,
+        // width: 300,
+        textAlign: 'center',
+    },
+});

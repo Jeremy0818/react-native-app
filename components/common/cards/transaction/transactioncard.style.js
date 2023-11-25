@@ -1,6 +1,7 @@
 import { StyleSheet } from "react-native";
 
 import { COLORS, FONT, SHADOWS, SIZES } from "../../../../constants";
+
 const styles = StyleSheet.create({
   wrapper: {
     backgroundColor: "white",
@@ -19,21 +20,8 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   container: {
-    // width: 300,
-    // height: 80,
-    // backgroundColor: "white",
-    // borderRadius: 10,
     flexDirection: 'row',
     alignItems: 'center',
-    // margin: 20,
-    // marginBottom: 15,
-    // marginLeft: 10,
-    // marginRight: 10,
-    // shadowColor: 'black',
-    // shadowOffset: { width: 0, height: 2 },
-    // shadowOpacity: 0.1,
-    // shadowRadius: 10,
-    // elevation: 5,
   },
   editContainer: {
     height: 450,
@@ -42,12 +30,12 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   editText: {
-    fontSize: 16,
+    fontSize: SIZES.small,
     color: 'black',
   },
   inputField: {
     fontFamily: FONT.regular,
-    width: 300,
+    // width: 300,
     paddingHorizontal: SIZES.medium,
   },
   inputDateWrapper: {
@@ -111,6 +99,25 @@ const styles = StyleSheet.create({
   yearText: {
     fontSize: 12,
     color: 'black',
+  },
+  btnContainer: {
+    flexDirection: 'row',
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  btn: {
+    flex: 1,
+    backgroundColor: "purple",
+    height: 40,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: SIZES.medium,
+    margin: 10,
+  },
+  btnText: {
+    fontSize: SIZES.medium,
+    color: COLORS.white,
+    fontFamily: FONT.bold,
   },
 });
 

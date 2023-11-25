@@ -5,7 +5,7 @@ import styles from './transaction.style'
 import { SIZES } from '../../../constants'
 import TransactionCard from '../../common/cards/transaction/TransactionCard'
 
-const Transaction = ({ title, data }) => {
+const Transaction = ({ data, scrollViewRef }) => {
     const [selectedTransaction, setSelectedTransaction] = useState();
 
     const handleCardPress = (id) => {
@@ -20,6 +20,7 @@ const Transaction = ({ title, data }) => {
                         data.map((item, index) => (
                             <TransactionCard
                                 key={index}
+                                scrollViewRef={scrollViewRef}
                                 transaction={item}
                                 selectedTransaction={selectedTransaction}
                                 handleCardPress={handleCardPress}
