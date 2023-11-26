@@ -3,7 +3,7 @@ import { Dimensions, View, Text, SafeAreaView, ScrollView, ActivityIndicator, Re
 import { Stack, useRouter, useLocalSearchParams } from 'expo-router'
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 
-import { AccountTabs, Transaction, AccountFooter, SlidingMenu } from '../../components'
+import { AccountTabs, Transaction, AccountFooter, SlidingMenuModal } from '../../components'
 import { COLORS, icons, SIZES, FONT } from '../../constants'
 import { getAccount } from '../../utils/RequestHelper'
 import { useAuth } from '../../utils/AuthContext'
@@ -189,7 +189,7 @@ const AccountDetails = () => {
                         inactiveDotScale={0.6}
                         tappableDots={true}
                     />
-                    <SlidingMenu />
+                    <SlidingMenuModal accountId={id}/>
                 </>
             )}
         </SafeAreaView>

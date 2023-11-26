@@ -4,7 +4,7 @@ import { COLORS, FONT, SHADOWS, SIZES } from "../../../../constants";
 
 const styles = StyleSheet.create({
   container: (selectedAccount, account) => ({
-    width: 250,
+    width: 200,
     padding: SIZES.xLarge,
     backgroundColor: selectedAccount === account.id ? COLORS.primary : "#FFF",
     borderRadius: SIZES.medium,

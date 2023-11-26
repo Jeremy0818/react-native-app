@@ -22,6 +22,7 @@ import { default as AccountFooter } from "./accountdetails/footer/Footer";
 import NearbyJobCard from "./common/cards/nearby/NearbyJobCard";
 import TransactionCard from "./common/cards/transaction/TransactionCard";
 import BottomTabs from "./common/bottomtabs/BottomTabs";
+import SlidingMenuModal from "./common/slidingmenu/SlidingMenuModal";
 import SlidingMenu from "./common/slidingmenu/SlidingMenu";
 
 export {
@@ -41,5 +42,6 @@ export {
   Specifics,
   NearbyJobCard,
   BottomTabs,
+  SlidingMenuModal,
   SlidingMenu
 };

@@ -6,13 +6,15 @@ import Animated, {
     useAnimatedStyle,
 } from "react-native-reanimated";
 
+import { SIZES, COLORS, FONT } from "../../../constants";
+
 const CustomBackdrop = ({ animatedIndex, style, onPress }) => {
     // animated variables
     const containerAnimatedStyle = useAnimatedStyle(() => ({
         opacity: interpolate(
             animatedIndex.value,
             [-1, 0],
-            [0, 0.8],
+            [0, 0.5],
             Extrapolate.CLAMP
         ),
     }));
@@ -22,7 +24,7 @@ const CustomBackdrop = ({ animatedIndex, style, onPress }) => {
         () => [
             style,
             {
-                backgroundColor: "#a8b5eb",
+                backgroundColor: COLORS.primary,
             },
             containerAnimatedStyle,
         ],
