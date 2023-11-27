@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { View, Text, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native'
-import { useRouter } from 'expo-router'
+import { useRouter, useFocusEffect } from 'expo-router'
 import styles from './accounts.style'
 import { COLORS, SIZES } from '../../../constants'
 import AccountCard from '../../common/cards/account/AccountCard'
@@ -30,10 +30,17 @@ const Accounts = () => {
         getAccountsInfo();
     }, []);
 
+    useFocusEffect(
+        useCallback(() => {
+            getAccountsInfo();
+            return () => {};
+        }, [])
+    );
+
     const handleCardPress = (account) => {
         router.push(`/account/${account.id}`);
         setSelectedAccount(account.id);
-      }
+    }
 
     return (
         <View style={styles.container}>

@@ -1,12 +1,14 @@
 import React, { useCallback, useEffect, useState, useRef } from 'react'
 import { Dimensions, View, Text, SafeAreaView, ScrollView, ActivityIndicator, RefreshControl, StyleSheet } from 'react-native'
-import { Stack, useRouter, useLocalSearchParams } from 'expo-router'
+import { Stack, useRouter, useLocalSearchParams, useFocusEffect } from 'expo-router'
 import Carousel, { Pagination } from 'react-native-snap-carousel';
+import { Ionicons } from '@expo/vector-icons';
 
 import { AccountTabs, Transaction, AccountFooter, SlidingMenuModal } from '../../components'
 import { COLORS, icons, SIZES, FONT } from '../../constants'
 import { getAccount } from '../../utils/RequestHelper'
 import { useAuth } from '../../utils/AuthContext'
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const tabs = ["Income", "Expense", "Transfer"];
 const SLIDER_WIDTH = Dimensions.get('window').width;
@@ -27,18 +29,12 @@ const ContentView = ({ item, index, refreshing, onRefresh, setActiveTab }) => {
             shadowRadius: 10,
             elevation: 5,
         }}>
-            <ScrollView
-                ref={scrollViewRef}
-                showsVerticalScrollIndicator={false}
-                refreshControl={
-                    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-                }
-            >
-                <Transaction
-                    data={item}
-                    scrollViewRef={scrollViewRef}
-                />
-            </ScrollView>
+            <Transaction
+                data={item}
+                scrollViewRef={scrollViewRef}
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+            />
         </View>
     )
 }
@@ -71,6 +67,13 @@ const AccountDetails = () => {
         }
         getAccountInfo();
     }, []);
+
+    useFocusEffect(
+        useCallback(() => {
+            getAccountInfo();
+            return () => { };
+        }, [])
+    );
 
     useEffect(() => {
         if (isCarousel && isCarousel.current && isCarousel.current.currentIndex !== activeTab) {
@@ -129,12 +132,12 @@ const AccountDetails = () => {
                 options={{
                     headerStyle: { backgroundColor: COLORS.lightWhite },
                     headerShadowVisible: false,
-                    // headerRight: () => (
-                    //     <ScreenHeaderBtn
-                    //         iconUrl={icons.share} // edit
-                    //         dimension="60%"
-                    //     />
-                    // ),
+                    headerRight: () => (
+                        <TouchableOpacity>
+                            <Ionicons name="create-outline" size={24} color={"black"} />
+                        </TouchableOpacity>
+                        
+                    ),
                     headerTitle: account ? account.account_name : ''
                 }}
             />
@@ -146,13 +149,13 @@ const AccountDetails = () => {
                 <Text>Something went wrong</Text>
             ) : (
                 <>
-                    <Text style={{...styles.headText, textAlign: 'center', }}>{account?.balance}</Text>
+                    <Text style={{ ...styles.headText, textAlign: 'center', }}>{account?.balance}</Text>
                     <AccountTabs
                         tabs={tabs}
                         activeTab={activeTab}
                         setActiveTab={setActiveTab}
                     />
-                    <Text style={{ ...styles.headText, textAlign: 'center', }}>Transaction history</Text>
+                    {/* <Text style={{ ...styles.headText, textAlign: 'center', }}>Transaction history</Text> */}
                     <Carousel
                         layout="default"
                         layoutCardOffset={9}
@@ -189,7 +192,7 @@ const AccountDetails = () => {
                         inactiveDotScale={0.6}
                         tappableDots={true}
                     />
-                    <SlidingMenuModal accountId={id}/>
+                    <SlidingMenuModal accountId={id} />
                 </>
             )}
         </SafeAreaView>

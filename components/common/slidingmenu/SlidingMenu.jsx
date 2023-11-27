@@ -47,7 +47,7 @@ const SlidingMenu = ({ renderComponent }) => {
 const styles = StyleSheet.create({
     sheetContainer: {
         // add horizontal space
-        marginHorizontal: SIZES.medium,
+        // marginHorizontal: SIZES.medium,
     },
     contentContainer: {
         backgroundColor: COLORS.white,

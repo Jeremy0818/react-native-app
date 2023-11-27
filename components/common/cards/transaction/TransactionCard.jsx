@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, TextInput, Image, StyleSheet, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
@@ -42,13 +42,17 @@ const rightSwipeActions = () => {
     );
 };
 
-const TransactionCard = ({ scrollViewRef, transaction, selectedTransaction, handleCardPress }) => {
+const TransactionCard = ({ edit, scrollViewRef, transaction, selectedTransaction, handleCardPress }) => {
     const [expanded, setExpanded] = useState(false);
     const [selectedDate, setSelectedDate] = useState(new Date(transaction.date));
     const [account, setAccount] = useState(transaction.account);
 
+    useEffect(() => {
+        if (!edit) setExpanded(false);
+    }, [edit]);
+
     const onItemPress = (event) => {
-        setExpanded(!expanded);
+        if (edit) setExpanded(!expanded);
     };
 
     function formatDateDayMonth(inputDate) {
@@ -64,11 +68,8 @@ const TransactionCard = ({ scrollViewRef, transaction, selectedTransaction, hand
         return year;
     }
 
-    return (
-        <Swipeable
-            // renderLeftActions={LeftSwipeActions}
-            renderRightActions={rightSwipeActions}
-        >
+    const renderContent = () => {
+        return (
             <View style={styles.wrapper} >
                 <TouchableWithoutFeedback
                     onPress={(event) => onItemPress(event)}
@@ -78,7 +79,12 @@ const TransactionCard = ({ scrollViewRef, transaction, selectedTransaction, hand
                             <Ionicons name="image" size={24} color={"black"} />
                         </View>
                         <View style={styles.content}>
-                            <Text style={styles.title}>{transaction.title}</Text>
+                            <Text
+                                numberOfLines={1}
+                                ellipsizeMode='tail'
+                                style={styles.title}>
+                                {transaction.title}
+                            </Text>
                             <Text style={styles.amount}>{transaction.total_amount}</Text>
                         </View>
                         <View style={styles.date}>
@@ -86,7 +92,13 @@ const TransactionCard = ({ scrollViewRef, transaction, selectedTransaction, hand
                             <Text style={styles.yearText}>{formatDateYear(transaction.date)}</Text>
                         </View>
                         <View style={styles.iconRight}>
-                            <Ionicons name={expanded ? "chevron-up" : "chevron-down"} size={18} color={"black"} />
+                            {
+                                edit ?
+                                    <Ionicons name={expanded ? "chevron-up" : "chevron-down"} size={18} color={"black"} />
+                                    :
+                                    null
+                            }
+
                         </View>
 
                     </View>
@@ -189,8 +201,21 @@ const TransactionCard = ({ scrollViewRef, transaction, selectedTransaction, hand
                     </View>
                 </CollapsableContainer>
             </View>
-        </Swipeable>
+        )
+    }
 
+    return (
+        edit ?
+            <Swipeable
+                // renderLeftActions={LeftSwipeActions}
+                renderRightActions={rightSwipeActions}
+            >
+                {renderContent()}
+            </Swipeable>
+            :
+            <View>
+                {renderContent()}
+            </View>
     );
 };
 

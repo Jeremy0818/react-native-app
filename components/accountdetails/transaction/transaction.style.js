@@ -1,13 +1,29 @@
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 
 import { COLORS, FONT, SIZES } from "../../../constants";
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: SIZES.large,
+    // marginTop: SIZES.medium,
     // backgroundColor: COLORS.lightWhite,
     borderRadius: SIZES.medium,
     padding: SIZES.medium,
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: SIZES.small,
+  },
+  headerTitle: {
+    fontSize: SIZES.large,
+    fontFamily: FONT.medium,
+    color: COLORS.primary,
+  },
+  headerBtn: {
+    fontSize: SIZES.medium,
+    fontFamily: FONT.medium,
+    color: COLORS.gray,
   },
   headText: {
     fontSize: SIZES.large,
@@ -16,6 +32,7 @@ const styles = StyleSheet.create({
   },
   contentBox: {
     marginVertical: SIZES.small,
+    height: Dimensions.get('window').height * 0.5,
   },
   contextText: {
     fontSize: SIZES.medium - 2,
