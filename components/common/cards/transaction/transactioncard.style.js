@@ -24,14 +24,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   editContainer: {
-    height: 450,
+    height: 350,
   },
   editTextWrapper: {
     alignItems: 'flex-start',
+    width: 55,
   },
   editText: {
     fontSize: SIZES.small,
     color: 'black',
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    justifyContent: "center",
+    alignItems: "center",
   },
   inputField: {
     fontFamily: FONT.regular,
@@ -55,7 +61,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: SIZES.medium,
     margin: 10,
-    height: 60,
+    height: SIZES.xxLarge,
   },
   iconLeft: {
     width: 80,

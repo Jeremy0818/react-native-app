@@ -5,7 +5,7 @@ import styles from './transaction.style'
 import { SIZES } from '../../../constants'
 import TransactionCard from '../../common/cards/transaction/TransactionCard'
 
-const Transaction = ({ data, scrollViewRef, refreshing, onRefresh }) => {
+const Transaction = ({ data, scrollViewRef, refreshing, onRefresh, onUpdate, onDelete }) => {
     const [selectedTransaction, setSelectedTransaction] = useState();
     const [edit, setEdit] = useState(false);
 
@@ -16,9 +16,12 @@ const Transaction = ({ data, scrollViewRef, refreshing, onRefresh }) => {
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <Text style={styles.headerTitle}>Transaction History</Text>
-                <TouchableOpacity onPress={() => setEdit(!edit)} >
-                    <Text style={styles.headerBtn}>{edit ? "cancel" : "Edit"}</Text>
+                <Text style={styles.headerTitle}>Transactions</Text>
+                <TouchableOpacity onPress={() => {
+                        setEdit(!edit);
+                        if (edit && onRefresh) onRefresh();
+                    }} >
+                    <Text style={styles.headerBtn}>{edit ? "Done" : "Edit"}</Text>
                 </TouchableOpacity>
             </View>
             <View style={styles.contentBox}>
@@ -33,12 +36,14 @@ const Transaction = ({ data, scrollViewRef, refreshing, onRefresh }) => {
                         data.length > 0 ?
                             data.map((item, index) => (
                                 <TransactionCard
-                                    key={index}
+                                    key={item.id ? item.id : index}
                                     edit={edit}
                                     scrollViewRef={scrollViewRef}
                                     transaction={item}
                                     selectedTransaction={selectedTransaction}
                                     handleCardPress={handleCardPress}
+                                    onUpdate={onUpdate}
+                                    onDelete={onDelete}
                                 />
                             ))
                             :

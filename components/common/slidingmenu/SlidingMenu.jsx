@@ -10,7 +10,7 @@ const SlidingMenu = ({ renderComponent }) => {
     const scrollViewRef = useRef(null);
 
     // variables
-    const snapPoints = useMemo(() => ["50%", "98%"], []);
+    const snapPoints = useMemo(() => ["50%", "80%"], []);
 
     // callbacks
     const handleSheetChange = useCallback((index) => {

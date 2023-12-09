@@ -40,6 +40,7 @@ const SlidingMenuModal = ({ accountId }) => {
         if (level < 1) {
             setLevel(level + 1);
         } else {
+            handleClosePress();
             openImageScan();
         }
 

@@ -6,7 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { AccountTabs, Transaction, AccountFooter, SlidingMenuModal } from '../../components'
 import { COLORS, icons, SIZES, FONT } from '../../constants'
-import { getAccount } from '../../utils/RequestHelper'
+import { getAccount, updateTransaction, deleteTransaction } from '../../utils/RequestHelper'
 import { useAuth } from '../../utils/AuthContext'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
@@ -14,7 +14,7 @@ const tabs = ["Income", "Expense", "Transfer"];
 const SLIDER_WIDTH = Dimensions.get('window').width;
 const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 1);
 
-const ContentView = ({ item, index, refreshing, onRefresh, setActiveTab }) => {
+const ContentView = ({ item, index, refreshing, onRefresh }) => {
     const scrollViewRef = useRef(null);
 
     return (
@@ -34,6 +34,8 @@ const ContentView = ({ item, index, refreshing, onRefresh, setActiveTab }) => {
                 scrollViewRef={scrollViewRef}
                 refreshing={refreshing}
                 onRefresh={onRefresh}
+                onUpdate={updateTransaction}
+                onDelete={deleteTransaction}
             />
         </View>
     )
@@ -66,11 +68,17 @@ const AccountDetails = () => {
             router.replace("");
         }
         getAccountInfo();
+        if (isCarousel && isCarousel.current && isCarousel.current.currentIndex !== activeTab) {
+            isCarousel.current.snapToItem(activeTab, animated = true, fireCallback = true)
+        }
     }, []);
 
     useFocusEffect(
         useCallback(() => {
             getAccountInfo();
+            if (isCarousel && isCarousel.current && isCarousel.current.currentIndex !== activeTab) {
+                isCarousel.current.snapToItem(activeTab, animated = true, fireCallback = true)
+            }
             return () => { };
         }, [])
     );
@@ -85,6 +93,7 @@ const AccountDetails = () => {
         let tempList = [];
         for (let i = 0; i < list.length; i++) {
             let tempItem = {
+                id: list[i].transaction.id,
                 title: list[i].transaction.title,
                 total_amount: list[i].transaction.total_amount,
                 date: list[i].transaction.date,
@@ -107,8 +116,8 @@ const AccountDetails = () => {
         } else {
             console.log(data.data);
             setAccount(data.data.account);
-            setExpenses(setupItem(data.data.expenses, data.data.account, "expense"));
-            setIncomes(setupItem(data.data.incomes, data.data.account, "income"));
+            setExpenses(setupItem(data.data.expenses, data.data.account, "Expense"));
+            setIncomes(setupItem(data.data.incomes, data.data.account, "Income"));
             setExpCategories(data.data.expense_categories);
             setIncCategories(data.data.income_categories);
             setTrnCategories(data.data.transfer_categories);
@@ -119,11 +128,10 @@ const AccountDetails = () => {
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);
+        getAccountInfo();
         setTimeout(() => {
-            getAccountInfo();
             setRefreshing(false);
         }, 1000);
-
     });
 
     return (
@@ -167,7 +175,6 @@ const AccountDetails = () => {
                                 index={index}
                                 refreshing={refreshing}
                                 onRefresh={onRefresh}
-                                setActiveTab={setActiveTab}
                             />
                         )}
                         setIndex={setActiveTab}

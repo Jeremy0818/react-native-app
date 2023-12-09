@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, TextInput, Image, StyleSheet, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, Image, StyleSheet, TouchableWithoutFeedback, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -9,43 +9,16 @@ import styles from './transactioncard.style';
 import { CollapsableContainer } from '../../collapsible/CollapsibleContainer';
 import { COLORS, FONT, SHADOWS, SIZES } from "../../../../constants";
 
-const LeftSwipeActions = () => {
-    return (
-        <View
-            style={{ flex: 1, backgroundColor: '#ccffbd', justifyContent: 'center' }}
-        >
-            <Text
-                style={{
-                    color: '#40394a',
-                    paddingHorizontal: 10,
-                    fontWeight: '600',
-                    paddingHorizontal: 30,
-                    paddingVertical: 20,
-                }}
-            >
-                Bookmark
-            </Text>
-        </View>
-    );
-};
-const rightSwipeActions = () => {
-    return (
-        <View
-            style={{
-                // backgroundColor: '#ff8303',
-                justifyContent: 'center',
-                alignItems: 'flex-end',
-            }}
-        >
-            <Ionicons name="trash" size={24} color={"black"} />
-        </View>
-    );
-};
-
-const TransactionCard = ({ edit, scrollViewRef, transaction, selectedTransaction, handleCardPress }) => {
+const TransactionCard = ({ edit, scrollViewRef, transaction, selectedTransaction, handleCardPress, onUpdate, onDelete }) => {
     const [expanded, setExpanded] = useState(false);
+    const [title, setTitle] = useState(transaction.title);
+    const [amount, setAmount] = useState(transaction.total_amount);
+    const [category, setCategory] = useState(transaction.category);
+    const [type, setType] = useState(transaction.type);
     const [selectedDate, setSelectedDate] = useState(new Date(transaction.date));
     const [account, setAccount] = useState(transaction.account);
+    const [isLoading, setIsLoading] = useState(false);
+    const [deleted, setDeleted] = useState(false);
 
     useEffect(() => {
         if (!edit) setExpanded(false);
@@ -53,6 +26,41 @@ const TransactionCard = ({ edit, scrollViewRef, transaction, selectedTransaction
 
     const onItemPress = (event) => {
         if (edit) setExpanded(!expanded);
+    };
+
+    const leftSwipeActions = () => {
+        return (
+            <View
+                style={{ flex: 1, backgroundColor: '#ccffbd', justifyContent: 'center' }}
+            >
+                <Text
+                    style={{
+                        color: '#40394a',
+                        paddingHorizontal: 10,
+                        fontWeight: '600',
+                        paddingHorizontal: 30,
+                        paddingVertical: 20,
+                    }}
+                >
+                    Bookmark
+                </Text>
+            </View>
+        );
+    };
+
+    const rightSwipeActions = () => {
+        return (
+            <TouchableOpacity
+                style={{
+                    // backgroundColor: '#ff8303',
+                    justifyContent: 'center',
+                    alignItems: 'flex-end',
+                }}
+                onPress={handleDelete}
+            >
+                <Ionicons name="trash" size={24} color={"black"} />
+            </TouchableOpacity>
+        );
     };
 
     function formatDateDayMonth(inputDate) {
@@ -67,6 +75,42 @@ const TransactionCard = ({ edit, scrollViewRef, transaction, selectedTransaction
         const year = date.getFullYear();
         return year;
     }
+
+    const handleSave = async () => {
+        setExpanded(false);
+        if (onUpdate) {
+            transaction.title = title;
+            transaction.total_amount = amount;
+            transaction.category = category;
+            transaction.type = type;
+            transaction.date = selectedDate.toISOString().split('T')[0];
+            transaction.account = account;
+            setIsLoading(true);
+            const { data, error } = await onUpdate(transaction);
+
+            if (error) {
+                alert(error);
+            } else {
+                console.log(data.status);
+            }
+            setIsLoading(false);
+        }
+    };
+
+    const handleDelete = async () => {
+        setExpanded(false);
+        if (onDelete) {
+            setIsLoading(true);
+            const { data, error } = await onDelete(transaction);
+            if (error) {
+                alert(error);
+            } else {
+                console.log(data.status);
+            }
+            setIsLoading(false);
+            setDeleted(true);
+        }
+    };
 
     const renderContent = () => {
         return (
@@ -105,87 +149,95 @@ const TransactionCard = ({ edit, scrollViewRef, transaction, selectedTransaction
                 </TouchableWithoutFeedback>
 
                 <CollapsableContainer expanded={expanded}>
-                    <View style={styles.editContainer}>
-                        <View style={styles.editTextWrapper}>
-                            <Text style={styles.editText}>Title</Text>
 
+                    <View style={styles.editContainer}>
+                        <View style={styles.inputContainer}>
+                            <View style={styles.editTextWrapper}>
+                                <Text style={styles.editText}>Title</Text>
+
+                            </View>
+                            <View style={styles.inputWrapper}>
+                                <TextInput
+                                    value={title}
+                                    onChangeText={(text) => { setTitle(text) }}
+                                    style={styles.inputField}
+                                />
+                            </View>
                         </View>
-                        <View style={styles.inputWrapper}>
-                            <TextInput
-                                value={transaction.title}
-                                onChangeText={() => { }}
-                                style={styles.inputField}
-                            />
+
+                        <View style={styles.inputContainer}>
+                            <View style={styles.editTextWrapper}>
+                                <Text style={styles.editText}>Total Amount</Text>
+                            </View>
+                            <View style={styles.inputWrapper}>
+                                <TextInput
+                                    value={amount}
+                                    inputMode='decimal'
+                                    onChangeText={(text) => { setAmount(text) }}
+                                    style={styles.inputField}
+                                />
+                            </View>
                         </View>
-                        <View style={styles.editTextWrapper}>
-                            <Text style={styles.editText}>Total Amount</Text>
+
+                        <View style={styles.inputContainer}>
+                            <View style={styles.editTextWrapper}>
+                                <Text style={styles.editText}>Date</Text>
+                            </View>
+                            <View style={styles.inputDateWrapper}>
+                                <DateTimePicker
+                                    mode='date'
+                                    value={selectedDate}
+                                    date={selectedDate}
+                                    onChange={(e, date) => setSelectedDate(date)}
+                                />
+                            </View>
                         </View>
-                        <View style={styles.inputWrapper}>
-                            <TextInput
-                                value={transaction.total_amount}
-                                onChangeText={() => { }}
-                                style={styles.inputField}
-                            />
+
+                        <View style={styles.inputContainer}>
+                            <View style={styles.editTextWrapper}>
+                                <Text style={styles.editText}>Category</Text>
+                            </View>
+                            <View style={styles.inputWrapper}>
+                                <RNPickerSelect
+                                    style={pickerSelectStyles}
+                                    placeholder={{}}
+                                    items={[
+                                        { label: 'Groceries', value: 'Groceries' },
+                                        { label: 'Shopping', value: 'Shopping' },
+                                        { label: 'Dining', value: 'Dining' },
+                                    ]}
+                                    onValueChange={setCategory}
+                                    value={category}
+                                    useNativeAndroidPickerStyle={false}
+                                />
+                            </View>
                         </View>
-                        <View style={styles.editTextWrapper}>
-                            <Text style={styles.editText}>Date</Text>
+
+                        <View style={styles.inputContainer}>
+                            <View style={styles.editTextWrapper}>
+                                <Text style={styles.editText}>Account Paid</Text>
+                            </View>
+                            <View style={styles.inputWrapper}>
+                                <RNPickerSelect
+                                    style={pickerSelectStyles}
+                                    placeholder={{}}
+                                    items={[
+                                        { label: 'Cash', value: 'Cash' },
+                                        { label: 'Savings', value: 'Savings' },
+                                        { label: 'Credit Card', value: 'Credit Card' },
+                                    ]}
+                                    onValueChange={setAccount}
+                                    value={account}
+                                    useNativeAndroidPickerStyle={false}
+                                />
+                            </View>
                         </View>
-                        <View style={styles.inputDateWrapper}>
-                            <DateTimePicker
-                                mode='date'
-                                value={selectedDate}
-                                date={selectedDate}
-                                onChange={(e, date) => setSelectedDate(date)}
-                            />
-                        </View>
-                        <View style={styles.editTextWrapper}>
-                            <Text style={styles.editText}>Transaction Type</Text>
-                        </View>
-                        <View style={styles.inputWrapper}>
-                            <TextInput
-                                value={transaction.type}
-                                onChangeText={() => { }}
-                                style={styles.inputField}
-                            />
-                        </View>
-                        <View style={styles.editTextWrapper}>
-                            <Text style={styles.editText}>Category</Text>
-                        </View>
-                        <View style={styles.inputWrapper}>
-                            <TextInput
-                                value={transaction.category}
-                                onChangeText={() => { }}
-                                style={styles.inputField}
-                            />
-                        </View>
-                        <View style={styles.editTextWrapper}>
-                            <Text style={styles.editText}>Account Paid</Text>
-                        </View>
-                        <View style={styles.inputWrapper}>
-                            {/* <TextInput
-                                value={transaction.account}
-                                onChangeText={() => { }}
-                                style={styles.inputField}
-                            /> */}
-                            <RNPickerSelect
-                                style={pickerSelectStyles}
-                                placeholder={{}}
-                                items={[
-                                    { label: 'Cash', value: 'Cash' },
-                                    { label: 'Savings', value: 'Savings' },
-                                    { label: 'Credit Card', value: 'Credit Card' },
-                                ]}
-                                onValueChange={setAccount}
-                                value={account}
-                                useNativeAndroidPickerStyle={false}
-                            />
-                        </View>
+
                         <View style={styles.btnContainer}>
                             <TouchableOpacity
                                 style={styles.btn}
-                                onPress={() => {
-                                    setExpanded(!expanded);
-                                }}
+                                onPress={handleSave}
+
                             >
                                 <Text style={styles.btnText}>Save</Text>
                             </TouchableOpacity>
@@ -205,17 +257,29 @@ const TransactionCard = ({ edit, scrollViewRef, transaction, selectedTransaction
     }
 
     return (
-        edit ?
-            <Swipeable
-                // renderLeftActions={LeftSwipeActions}
-                renderRightActions={rightSwipeActions}
-            >
-                {renderContent()}
-            </Swipeable>
-            :
-            <View>
-                {renderContent()}
+        isLoading ? (
+            <ActivityIndicator size="large" color={COLORS.primary} />
+        ) : deleted ? (
+            <View style={styles.wrapper} >
+                <View style={styles.container}>
+                    <Text>Deleted</Text>
+                </View>
+
             </View>
+
+        ) : (
+            edit ?
+                <Swipeable
+                    // renderLeftActions={LeftSwipeActions}
+                    renderRightActions={rightSwipeActions}
+                >
+                    {renderContent()}
+                </Swipeable>
+                :
+                <View>
+                    {renderContent()}
+                </View>
+        )
     );
 };
 

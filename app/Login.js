@@ -41,7 +41,8 @@ const Login = () => {
                     <Text>Username or Email</Text>
                     <View style={styles.inputWrapper}>
                         <TextInput
-                            placeholder="Enter your username or email"
+                            placeholder="Enter your username"
+                            placeholderTextColor={COLORS.gray}
                             value={username}
                             onChangeText={setUsername}
                             style={styles.inputField}
@@ -52,6 +53,7 @@ const Login = () => {
                     <View style={styles.inputWrapper}>
                         <TextInput
                             placeholder="Enter your password"
+                            placeholderTextColor={COLORS.gray}
                             value={password}
                             onChangeText={setPassword}
                             secureTextEntry

@@ -6,7 +6,7 @@ import * as ImagePicker from 'expo-image-picker';
 import ImageViewer from 'react-native-image-zoom-viewer';
 
 import { COLORS, icons, SIZES, FONT } from '../../constants'
-import { getAccount, uploadImage, saveTransactions } from '../../utils/RequestHelper'
+import { getAccount, uploadImage, saveNewTransactions } from '../../utils/RequestHelper'
 import { useAuth } from '../../utils/AuthContext'
 import { SlidingMenu, Transaction } from '../../components';
 
@@ -54,13 +54,13 @@ const ImageView = ({ image, handleChoosePhoto, handleTakePhoto }) => {
                     style={styles.imgButton}
                     onPress={handleChoosePhoto}
                 >
-                    <Text>Upload an Image</Text>
+                    <Ionicons name="images" size={20} color={COLORS.white} />
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={styles.imgButton}
                     onPress={handleTakePhoto}
                 >
-                    <Text>Take a photo</Text>
+                    <Ionicons name="camera" size={20} color={COLORS.white} />
                 </TouchableOpacity>
             </View>
             <Modal visible={visible} transparent={true}>
@@ -126,22 +126,6 @@ const ScanView = () => {
         }
     }
 
-    const setupItem = (list, account, type) => {
-        let tempList = [];
-        for (let i = 0; i < list.length; i++) {
-            let tempItem = {
-                title: list[i].transaction.title,
-                total_amount: list[i].transaction.total_amount,
-                date: list[i].transaction.date,
-                category: list[i].category.category_name,
-                account: account.account_name,
-                type: type,
-            }
-            tempList.push(tempItem)
-        }
-        return tempList;
-    };
-
     async function handleImage(image) {
         if (image) {
             // Set the selected image in the state
@@ -163,7 +147,7 @@ const ScanView = () => {
     }
 
     async function handleDone() {
-        const { data, error } = await saveTransactions(itemList);
+        const { data, error } = await saveNewTransactions(itemList);
         if (error) {
             alert(error);
         } else {

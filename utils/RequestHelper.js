@@ -64,12 +64,11 @@ export const uploadImage = async (image) => {
 
         return { data: data, error: null };
     } catch (error) {
-        console.error('Error:', error);
         return { data: null, error: error };
     }
 }
 
-export const saveTransactions = async (transactions) => {
+export const saveNewTransactions = async (transactions) => {
     try {
         // First, obtain the CSRF token
         const csrfResponse = await axios.get(host + '/api/get-csrf-token/');
@@ -87,7 +86,7 @@ export const saveTransactions = async (transactions) => {
         const response = await axios.post(host + '/api/transaction/', transactions, {
             headers: customHeaders,
         });
-        
+
         const data = response.data;
 
         if (data.error) {
@@ -97,8 +96,72 @@ export const saveTransactions = async (transactions) => {
 
         return { data: data, error: null };
     } catch (error) {
-        console.error('Error:', error);
-        return;
+        return { data: null, error: error };
+    }
+}
+
+export const updateTransaction = async (transaction) => {
+    try {
+        // First, obtain the CSRF token
+        const csrfResponse = await axios.get(host + '/api/get-csrf-token/');
+        const csrfToken = csrfResponse.data.csrfToken;
+
+        const { token, refreshToken } = await getToken();
+
+        // Create custom headers with the refresh token and CSRF token
+        const customHeaders = {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken,
+        };
+
+        const response = await axios.post(host + '/api/transaction/' + transaction.id + '/', transaction, {
+            headers: customHeaders,
+        });
+
+        const data = response.data;
+
+        if (data.error) {
+            console.log(data.error);
+            return { data: null, error: data.error };
+        }
+
+        return { data: data, error: null };
+    } catch (error) {
+        return { data: null, error: error };
+    }
+}
+
+export const deleteTransaction = async (transaction) => {
+    try {
+        // First, obtain the CSRF token
+        const csrfResponse = await axios.get(host + '/api/get-csrf-token/');
+        const csrfToken = csrfResponse.data.csrfToken;
+
+        const { token, refreshToken } = await getToken();
+
+        // Create custom headers with the refresh token and CSRF token
+        const customHeaders = {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken,
+        };
+
+        const response = await axios.delete(host + '/api/transaction/' + transaction.id + '/', {
+            data: transaction,
+            headers: customHeaders,
+        });
+
+        const data = response.data;
+
+        if (data.error) {
+            console.log(data.error);
+            return { data: null, error: data.error };
+        }
+
+        return { data: data, error: null };
+    } catch (error) {
+        return { data: null, error: error };
     }
 }
 
@@ -120,7 +183,7 @@ export const getAllAccount = async () => {
         const response = await axios.get(host + '/api/account/', {
             headers: customHeaders,
         });
-        
+
         const data = response.data;
 
         if (data.error) {
@@ -130,8 +193,7 @@ export const getAllAccount = async () => {
 
         return { data: data, error: null };
     } catch (error) {
-        console.error('Error:', error);
-        return;
+        return { data: null, error: error };
     }
 }
 
@@ -150,10 +212,10 @@ export const getAccount = async (id) => {
             'X-CSRFToken': csrfToken,
         };
 
-        const response = await axios.get(host + '/api/account/'+id+'/', {
+        const response = await axios.get(host + '/api/account/' + id + '/', {
             headers: customHeaders,
         });
-        
+
         const data = response.data;
 
         if (data.error) {
@@ -163,8 +225,7 @@ export const getAccount = async (id) => {
 
         return { data: data, error: null };
     } catch (error) {
-        console.error('Error:', error);
-        return;
+        return { data: null, error: error };
     }
 }
 
@@ -188,13 +249,13 @@ export const login = async (username, password) => {
 
         if (loginResponse.status === 200) {
             // Login successful
-            return {data: loginResponse.data, error: null};
+            return { data: loginResponse.data, error: null };
         } else {
             // Login failed
-            throw {data: null, error: new Error('Login failed')};
+            throw { data: null, error: new Error('Login failed') };
         }
     } catch (error) {
         // Handle login error
-        return {data: null, error: error};
+        return { data: null, error: error };
     }
 };
