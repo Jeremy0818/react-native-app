@@ -14,13 +14,23 @@ const BottomTabs = ({ screenName }) => {
     return (
         <View style={styles.container}>
             <TouchableOpacity style={styles.tab} onPress={() => handlePress("Overview")}>
-                <Ionicons name="home" size={24} color={screenName == "Overview" ? "black" : "grey"} />
-                <Text>Home</Text>
+                <Ionicons name="home" size={24} color={screenName == "Overview" ? "white" : "grey"} />
+                <Text style={styles.text(screenName, "Overview")}>Overview</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.tab} onPress={() => handlePress("Group")}>
+                <Ionicons name="people" size={24} color={screenName == "Group" ? "white" : "grey"} />
+                <Text style={styles.text(screenName, "Group")}>Group</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.tab} onPress={() => handlePress("Analytics")}>
+                <Ionicons name="analytics" size={24} color={screenName == "Analytics" ? "white" : "grey"} />
+                <Text style={styles.text(screenName, "Analytics")}>Analytics</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.tab} onPress={() => handlePress("Settings")}>
-                <Ionicons name="settings" size={24} color={screenName == "Settings" ? "black" : "grey"} />
-                <Text>Settings</Text>
+                <Ionicons name="settings" size={24} color={screenName == "Settings" ? "white" : "grey"} />
+                <Text style={styles.text(screenName, "Settings")}>Settings</Text>
             </TouchableOpacity>
         </View>
     );
@@ -31,14 +41,16 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
-        backgroundColor: 'lightgray',
-        paddingVertical: 20,
+        paddingVertical: 30,
         position: 'absolute',
         bottom: 0,
         left: 0,
         right: 0,
-        backgroundColor: COLORS.lightWhite,
+        backgroundColor: COLORS.primary,
     },
+    text: (screenName, current) => ({
+        color: screenName == current ? "white" : "grey",
+    }),
     tab: {
         alignItems: 'center',
     },

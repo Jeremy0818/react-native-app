@@ -2,6 +2,7 @@ import ScreenHeaderBtn from "./common/header/ScreenHeaderBtn";
 
 // home screen
 import Accounts from "./home/account/Accounts";
+import Groups from "./home/group/Groups";
 import Welcome from "./home/welcome/Welcome";
 import Nearbyjobs from "./home/nearby/Nearbyjobs";
 import Popularjobs from "./home/popular/Popularjobs";
@@ -32,6 +33,7 @@ export {
   TransactionCard,
   AccountFooter,
   ScreenHeaderBtn,
+  Groups,
   Welcome,
   Nearbyjobs,
   Popularjobs,

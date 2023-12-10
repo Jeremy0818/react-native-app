@@ -16,10 +16,10 @@ const Footer = ({ handlePress }) => {
       </TouchableOpacity> */}
 
       <TouchableOpacity 
-        style={styles.applyBtn}
+        style={styles.addBtn}
         onPress={handlePress}
       >
-        <Text style={styles.applyBtnText}>Add transaction</Text>
+        <Text style={styles.addBtnText}>Add transaction</Text>
       </TouchableOpacity>
     </View>
   )

@@ -86,7 +86,7 @@ const TransactionCard = ({ edit, scrollViewRef, transaction, selectedTransaction
             transaction.date = selectedDate.toISOString().split('T')[0];
             transaction.account = account;
             setIsLoading(true);
-            const { data, error } = await onUpdate(transaction);
+            const { data, error } = await onUpdate(transaction.id, transaction);
 
             if (error) {
                 alert(error);
@@ -101,14 +101,14 @@ const TransactionCard = ({ edit, scrollViewRef, transaction, selectedTransaction
         setExpanded(false);
         if (onDelete) {
             setIsLoading(true);
-            const { data, error } = await onDelete(transaction);
+            const { data, error } = await onDelete(transaction.id, transaction);
             if (error) {
                 alert(error);
             } else {
                 console.log(data.status);
+                setDeleted(true);
             }
             setIsLoading(false);
-            setDeleted(true);
         }
     };
 

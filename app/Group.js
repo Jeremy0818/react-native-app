@@ -3,10 +3,10 @@ import { View, ScrollView, SafeAreaView, Button } from 'react-native'
 import { Stack, useRouter } from 'expo-router'
 
 import { COLORS, icons, images, SIZES } from '../constants'
-import { ScreenHeaderBtn, BottomTabs } from '../components'
+import { ScreenHeaderBtn, BottomTabs, Groups } from '../components'
 import { useAuth } from '../utils/AuthContext'
 
-export default function Settings() {
+export default function Group() {
     const router = useRouter();
     const { isAuthenticated, clearToken } = useAuth();
 
@@ -22,7 +22,7 @@ export default function Settings() {
                 options={{
                     headerStyle: { backgroundColor: COLORS.lightWhite },
                     headerLeft: () => <></>,
-                    headerTitle: "Settings",
+                    headerTitle: "Group",
                     animation: "none"
                 }}
             />
@@ -32,16 +32,10 @@ export default function Settings() {
                     flex: 1,
                     padding: SIZES.medium
                 }}>
-                    <Button
-                        title="Logout"
-                        onPress={() => {
-                            clearToken();
-                            router.replace('');
-                        }}
-                    />
+                    <Groups />
                 </View>
             </ScrollView>
-            <BottomTabs screenName={"Settings"} />
+            <BottomTabs screenName={"Group"} />
         </SafeAreaView>
     )
 }

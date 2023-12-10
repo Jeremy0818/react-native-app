@@ -7,7 +7,7 @@ import { useAuth } from '../utils/AuthContext'
 import styles from '../components/common/common.style';
 import AppLogo from '../components/logo/AppLogo'
 
-export default function Home() {
+export default function Landing() {
     const router = useRouter();
     const { user, isAuthenticated } = useAuth();
 

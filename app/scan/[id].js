@@ -126,6 +126,23 @@ const ScanView = () => {
         }
     }
 
+    const setupItem = (list) => {
+        let tempList = [];
+        for (let i = 0; i < list.length; i++) {
+            let tempItem = {
+                id: i,
+                title: list[i].title,
+                total_amount: list[i].total_amount,
+                date: list[i].date,
+                category: list[i].category,
+                account: list[i].account,
+                type: list[i].type,
+            }
+            tempList.push(tempItem)
+        }
+        return tempList;
+    }
+
     async function handleImage(image) {
         if (image) {
             // Set the selected image in the state
@@ -135,7 +152,7 @@ const ScanView = () => {
             setIsLoading(false);
             if (error == null) {
                 console.log(data.data);
-                setItemList(data.data);
+                setItemList(setupItem(data.data));
                 setExpCategories(data.expense_categories);
                 setIncCategories(data.income_categories);
                 setTrnCategories(data.transfer_categories);
@@ -199,6 +216,32 @@ const ScanView = () => {
         }
     };
 
+    const updateItemList = async (id, updatedItem) => {
+        let tempList = itemList;
+        let index = tempList.findIndex(obj => obj.id === id);
+        itemList[index] = updatedItem;
+        setItemList(tempList);
+        return {
+            data: {
+                status: 'success',
+            },
+            error: null
+        }
+    }
+
+    const deleteItemList = async (id, deletedItem) => {
+        let tempList = itemList;
+        let index = tempList.findIndex(obj => obj.id === id);
+        tempList.splice(index, 1);
+        setItemList(tempList);
+        return {
+            data: {
+                status: 'success',
+            },
+            error: null
+        }
+    }
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
             <Stack.Screen
@@ -242,7 +285,12 @@ const ScanView = () => {
                     {
                         image ?
                             <SlidingMenu renderComponent={() => {
-                                return <Transaction data={itemList} />
+                                return (
+                                    <Transaction
+                                        data={itemList}
+                                        onUpdate={updateItemList}
+                                        onDelete={deleteItemList} />
+                                )
                             }} />
                             :
                             null

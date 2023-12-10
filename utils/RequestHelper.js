@@ -100,7 +100,7 @@ export const saveNewTransactions = async (transactions) => {
     }
 }
 
-export const updateTransaction = async (transaction) => {
+export const updateTransaction = async (id, transaction) => {
     try {
         // First, obtain the CSRF token
         const csrfResponse = await axios.get(host + '/api/get-csrf-token/');
@@ -115,7 +115,7 @@ export const updateTransaction = async (transaction) => {
             'X-CSRFToken': csrfToken,
         };
 
-        const response = await axios.post(host + '/api/transaction/' + transaction.id + '/', transaction, {
+        const response = await axios.post(host + '/api/transaction/' + id + '/', transaction, {
             headers: customHeaders,
         });
 
@@ -132,7 +132,7 @@ export const updateTransaction = async (transaction) => {
     }
 }
 
-export const deleteTransaction = async (transaction) => {
+export const deleteTransaction = async (id, transaction) => {
     try {
         // First, obtain the CSRF token
         const csrfResponse = await axios.get(host + '/api/get-csrf-token/');
@@ -147,7 +147,7 @@ export const deleteTransaction = async (transaction) => {
             'X-CSRFToken': csrfToken,
         };
 
-        const response = await axios.delete(host + '/api/transaction/' + transaction.id + '/', {
+        const response = await axios.delete(host + '/api/transaction/' + id + '/', {
             data: transaction,
             headers: customHeaders,
         });
