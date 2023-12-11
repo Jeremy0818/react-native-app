@@ -14,29 +14,31 @@ const styles = StyleSheet.create({
         alignItems: "center",
         flexDirection: "column",
         marginTop: SIZES.large,
-        height: 250,
+        // height: 400,
     },
     inputWrapper: {
-        flex: 1,
         backgroundColor: COLORS.white,
         marginRight: SIZES.small,
         justifyContent: "center",
         alignItems: "center",
         borderRadius: SIZES.medium,
-        // height: 50,
         margin: 10,
+        padding: 10,
+        height: 60,
     },
     inputField: {
         fontFamily: FONT.regular,
-        width: 200,
-        // height: 50,
+        fontSize: SIZES.medium,
+        width: 250,
+        height: 80,
         paddingHorizontal: SIZES.medium,
     },
     btn: {
         width: "auto",
-        height: 50,
+        height: 60,
         margin: 10,
-        padding: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 15,
         backgroundColor: COLORS.tertiary,
         borderRadius: SIZES.medium,
         justifyContent: "center",
@@ -44,9 +46,18 @@ const styles = StyleSheet.create({
     },
     btnImage: {
         tintColor: COLORS.black,
-      },
+    },
+    text: {
+        fontFamily: FONT.special,
+        fontSize: SIZES.large,
+    },
+    headerText: {
+        fontFamily: FONT.special,
+        fontSize: SIZES.xLarge,
+    },
     suppText: {
-        textDecorationLine: "underline"
+        textDecorationLine: "underline",
+        margin: 10,
     }
 });
 

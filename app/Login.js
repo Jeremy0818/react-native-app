@@ -34,22 +34,24 @@ const Login = () => {
                     headerStyle: { backgroundColor: COLORS.lightWhite },
                     headerShadowVisible: false,
                     headerTitle: "Login",
+                    headerTitleStyle: styles.headerText,
                 }}
             />
             <View style={styles.container}>
                 <View style={styles.inputContainer}>
-                    <Text>Username or Email</Text>
+                    <Text style={styles.text}>Username or Email</Text>
                     <View style={styles.inputWrapper}>
                         <TextInput
-                            placeholder="Enter your username"
+                            placeholder="Enter username / email"
                             placeholderTextColor={COLORS.gray}
                             value={username}
                             onChangeText={setUsername}
                             style={styles.inputField}
                             autoCapitalize='none'
+                            multiline={false}
                         />
                     </View>
-                    <Text>Password</Text>
+                    <Text style={styles.text}>Password</Text>
                     <View style={styles.inputWrapper}>
                         <TextInput
                             placeholder="Enter your password"
@@ -58,6 +60,7 @@ const Login = () => {
                             onChangeText={setPassword}
                             secureTextEntry
                             style={styles.inputField}
+                            multiline={false}
                         />
                     </View>
 

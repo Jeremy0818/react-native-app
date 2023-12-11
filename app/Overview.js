@@ -4,6 +4,7 @@ import { Stack, useRouter } from 'expo-router'
 
 import { COLORS, icons, images, SIZES } from '../constants'
 import { Accounts, ScreenHeaderBtn, BottomTabs, SlidingMenu } from '../components'
+import styles from '../components/common/common.style';
 import { useAuth } from '../utils/AuthContext'
 
 export default function Overview() {
@@ -29,6 +30,7 @@ export default function Overview() {
                         <ScreenHeaderBtn iconUrl={images.profile} dimension="100%" />
                     ),
                     headerTitle: "Overview",
+                    headerTitleStyle: styles.headerText,
                     animation: "none",
                 }}
             />

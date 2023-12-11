@@ -99,7 +99,7 @@ const isTokenAboutToExpire = (token) => {
 
         return expirationTime - currentTime < threshold;
     } catch (error) {
-        console.error('Error decoding token:', error);
+        // console.error('Error decoding token:', error);
         return true; // Handle decoding error as expired (err on the side of caution)
     }
 };

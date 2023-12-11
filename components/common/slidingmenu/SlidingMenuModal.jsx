@@ -14,16 +14,18 @@ const SlidingMenuModal = ({ accountId }) => {
     const sheetRef = useRef(null);
     const insets = useSafeAreaInsets();
     const [level, setLevel] = useState(0);
+    const [isOpen, setIsOpen] = useState(false);
 
     // variables
-    const snapPoints1 = useMemo(() => ["25%"], []);
+    const snapPoints1 = useMemo(() => ["35%"], []);
     const snapPoints2 = useMemo(() => ["35%"], []);
 
     // Define the menu options as an array of objects
     const menuOptions = [
         [
-            { value: 1, text: "Personal" },
-            { value: 2, text: "Group" },
+            { value: 1, text: "Income" },
+            { value: 2, text: "Expense" },
+            { value: 3, text: "Transfer" },
         ],
         [
             { value: 1, text: "Scan Receipt" },
@@ -64,17 +66,23 @@ const SlidingMenuModal = ({ accountId }) => {
     // callbacks
     const handleSheetChange = useCallback((index) => {
         console.log("handleSheetChange", index);
+        if (index == -1) {
+            setIsOpen(false);
+            console.log("here")
+        }
     }, []);
     const handleSnapPress = useCallback((index) => {
         sheetRef.current?.snapToIndex(index);
     }, []);
     const handleClosePress = useCallback(() => {
         setLevel(0);
+        setIsOpen(false);
         sheetRef.current?.close();
     }, []);
 
     const handlePresentModalPress = useCallback(() => {
         sheetRef.current?.present();
+        setIsOpen(true);
     }, []);
 
     // render
@@ -85,7 +93,7 @@ const SlidingMenuModal = ({ accountId }) => {
             <Button title="Snap To 50%" onPress={() => handleSnapPress(1)} />
             <Button title="Snap To 25%" onPress={() => handleSnapPress(0)} /> */}
             {/* <Button title="Close" onPress={() => handleClosePress()} /> */}
-            <AccountFooter handlePress={handlePresentModalPress} />
+            <AccountFooter isOpen={isOpen} handlePress={handlePresentModalPress} />
             <BottomSheetModal
                 ref={sheetRef}
                 snapPoints={level == 0 ? snapPoints1 : snapPoints2}
@@ -146,7 +154,7 @@ const styles = StyleSheet.create({
     },
     cancel: {
         // flex: 1,
-        backgroundColor: COLORS.primary,
+        backgroundColor: COLORS.secondary,
         height: 55,
         justifyContent: "center",
         alignItems: "center",

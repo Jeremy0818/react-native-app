@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { AntDesign, Ionicons } from '@expo/vector-icons'; // Import icons from @expo/vector-icons or any other icon library
 import { useRouter } from 'expo-router';
-import { COLORS } from '../../../constants';
+import { COLORS, SIZES } from '../../../constants';
 
 const BottomTabs = ({ screenName }) => {
     const router = useRouter();
@@ -14,22 +14,22 @@ const BottomTabs = ({ screenName }) => {
     return (
         <View style={styles.container}>
             <TouchableOpacity style={styles.tab} onPress={() => handlePress("Overview")}>
-                <Ionicons name="home" size={24} color={screenName == "Overview" ? "white" : "grey"} />
+                <Ionicons name="home" size={28} color={screenName == "Overview" ? "white" : "grey"} />
                 <Text style={styles.text(screenName, "Overview")}>Overview</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.tab} onPress={() => handlePress("Group")}>
-                <Ionicons name="people" size={24} color={screenName == "Group" ? "white" : "grey"} />
+                <Ionicons name="people" size={28} color={screenName == "Group" ? "white" : "grey"} />
                 <Text style={styles.text(screenName, "Group")}>Group</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.tab} onPress={() => handlePress("Analytics")}>
-                <Ionicons name="analytics" size={24} color={screenName == "Analytics" ? "white" : "grey"} />
+                <Ionicons name="analytics" size={28} color={screenName == "Analytics" ? "white" : "grey"} />
                 <Text style={styles.text(screenName, "Analytics")}>Analytics</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.tab} onPress={() => handlePress("Settings")}>
-                <Ionicons name="settings" size={24} color={screenName == "Settings" ? "white" : "grey"} />
+                <Ionicons name="settings" size={28} color={screenName == "Settings" ? "white" : "grey"} />
                 <Text style={styles.text(screenName, "Settings")}>Settings</Text>
             </TouchableOpacity>
         </View>
@@ -41,11 +41,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
-        paddingVertical: 30,
+        paddingVertical: 12,
+        marginHorizontal: 10,
         position: 'absolute',
-        bottom: 0,
+        bottom: 20,
         left: 0,
         right: 0,
+        borderRadius: SIZES.large,
         backgroundColor: COLORS.primary,
     },
     text: (screenName, current) => ({

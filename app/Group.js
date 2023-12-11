@@ -4,6 +4,7 @@ import { Stack, useRouter } from 'expo-router'
 
 import { COLORS, icons, images, SIZES } from '../constants'
 import { ScreenHeaderBtn, BottomTabs, Groups } from '../components'
+import styles from '../components/common/common.style';
 import { useAuth } from '../utils/AuthContext'
 
 export default function Group() {
@@ -23,6 +24,7 @@ export default function Group() {
                     headerStyle: { backgroundColor: COLORS.lightWhite },
                     headerLeft: () => <></>,
                     headerTitle: "Group",
+                    headerTitleStyle: styles.headerText,
                     animation: "none"
                 }}
             />

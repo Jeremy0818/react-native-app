@@ -14,6 +14,7 @@ const FONT = {
   regular: "DMRegular",
   medium: "DMMedium",
   bold: "DMBold",
+  special: "Pacifico_400Regular",
 };
 
 const SIZES = {

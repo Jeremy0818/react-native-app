@@ -5,6 +5,7 @@ import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { Ionicons } from '@expo/vector-icons';
 
 import { AccountTabs, Transaction, AccountFooter, SlidingMenuModal } from '../../components'
+import commonStyles from '../../components/common/common.style';
 import { COLORS, icons, SIZES, FONT } from '../../constants'
 import { getAccount, updateTransaction, deleteTransaction } from '../../utils/RequestHelper'
 import { useAuth } from '../../utils/AuthContext'
@@ -146,7 +147,8 @@ const AccountDetails = () => {
                         </TouchableOpacity>
                         
                     ),
-                    headerTitle: account ? account.account_name : ''
+                    headerTitle: account ? account.account_name : '',
+                    headerTitleStyle: commonStyles.headerText,
                 }}
             />
 

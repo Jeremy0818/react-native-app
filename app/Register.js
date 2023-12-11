@@ -35,29 +35,40 @@ const Register = () => {
             />
             <View style={styles.container}>
                 <View style={styles.inputContainer}>
+                    <Text style={styles.text}>Username</Text>
                     <View style={styles.inputWrapper}>
                         <TextInput
-                            placeholder="Username"
+                            placeholder="Enter your username"
+                            placeholderTextColor={COLORS.gray}
                             value={username}
                             onChangeText={setUsername}
                             style={styles.inputField}
+                            autoCapitalize='none'
+                            multiline={false}
                         />
                     </View>
+                    <Text style={styles.text}>Email</Text>
                     <View style={styles.inputWrapper}>
                         <TextInput
-                            placeholder="Email"
+                            placeholder="Enter your email"
+                            placeholderTextColor={COLORS.gray}
                             value={email}
                             onChangeText={setEmail}
                             style={styles.inputField}
+                            autoCapitalize='none'
+                            multiline={false}
                         />
                     </View>
+                    <Text style={styles.text}>Password</Text>
                     <View style={styles.inputWrapper}>
                         <TextInput
-                            placeholder="Password"
+                            placeholder="Enter your assword"
+                            placeholderTextColor={COLORS.gray}
                             value={password}
                             onChangeText={setPassword}
                             secureTextEntry
                             style={styles.inputField}
+                            multiline={false}
                         />
                     </View>
 
