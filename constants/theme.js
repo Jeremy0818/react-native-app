@@ -14,7 +14,7 @@ const FONT = {
   regular: "DMRegular",
   medium: "DMMedium",
   bold: "DMBold",
-  special: "Pacifico_400Regular",
+  special: "PermanentMarker_400Regular",
 };
 
 const SIZES = {
