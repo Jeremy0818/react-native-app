@@ -180,7 +180,7 @@ const AccountDetails = () => {
                             />
                         )}
                         setIndex={setActiveTab}
-                        onSnapToItem={(index) => setActiveTab(index)}
+                        onBeforeSnapToItem={(index) => setActiveTab(index)}
                         sliderWidth={SLIDER_WIDTH}
                         itemWidth={ITEM_WIDTH}
                         inactiveSlideShift={0}

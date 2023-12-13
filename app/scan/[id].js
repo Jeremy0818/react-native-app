@@ -68,7 +68,7 @@ const ImageView = ({ image, handleChoosePhoto, handleTakePhoto }) => {
                     imageUrls={[{ url: image }]} // pass the image url in an array
                     enableSwipeDown={true} // enable swipe down to close the modal
                     onSwipeDown={handleClose} // call the handleClose function when swiped down
-                    renderFooter={() => (
+                    renderFooter={(currentIndex) => (
                         <TouchableOpacity
                             style={{ ...styles.imgButton, width: Dimensions.get('window').width * 0.95, marginBottom: 30, }}
                             onPress={handleClose}
@@ -77,7 +77,6 @@ const ImageView = ({ image, handleChoosePhoto, handleTakePhoto }) => {
                         </TouchableOpacity>
                     )}
                 />
-
             </Modal>
         </View>
     );

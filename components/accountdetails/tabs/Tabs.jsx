@@ -25,20 +25,23 @@ const Tabs = ({ tabs, activeTab, setActiveTab }) => {
     const handleSlide = (type) => {
         Animated.spring(translateX, {
             toValue: type,
-            duration: 100
+            duration: 100,
+            useNativeDriver: true,
         }).start();
         if (activeTab === 0) {
             Animated.parallel(Array.from({length: tabs.length}, (x, i) =>
                 Animated.spring(translateXTabs[i], {
                     toValue: width * i,
-                    duration: 50
+                    duration: 100,
+                    useNativeDriver: true,
                 }).start()
             ));
         } else {
             Animated.parallel(Array.from({length: tabs.length}, (x, i) =>
                 Animated.spring(translateXTabs[i], {
                     toValue: -width * 1,
-                    duration: 50
+                    duration: 100,
+                    useNativeDriver: true,
                 }).start()
             ));
         }
@@ -57,10 +60,10 @@ const Tabs = ({ tabs, activeTab, setActiveTab }) => {
                     flexDirection: "row",
                     marginTop: 20,
                     marginBottom: 20,
-                    height: 36,
+                    height: 40,
                     position: "relative",
                     backgroundColor: COLORS.gray2,
-                    borderRadius: 4,
+                    borderRadius: SIZES.medium,
                 }}
             >
                 <Animated.View
@@ -71,7 +74,7 @@ const Tabs = ({ tabs, activeTab, setActiveTab }) => {
                         top: 0,
                         left: 0,
                         backgroundColor: COLORS.primary,
-                        borderRadius: 4,
+                        borderRadius: SIZES.medium,
                         transform: [
                             {
                                 translateX
