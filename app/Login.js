@@ -23,7 +23,7 @@ const Login = () => {
             alert(result.error);
         } else {
             await cacheToken(result.data.access, result.data.refresh, result.data.user);
-            router.replace("Overview");
+            router.replace("Home");
         }
     };
 

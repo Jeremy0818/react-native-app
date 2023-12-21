@@ -14,7 +14,7 @@ const Accounts = () => {
     const [selectedAccount, setSelectedAccount] = useState();
 
     const getAccountsInfo = async () => {
-        setIsLoading(true);
+        
         const { data, error } = await getAllAccount();
         if (error) {
             console.log(error);
@@ -22,17 +22,20 @@ const Accounts = () => {
         } else {
             console.log(data.data);
             setAccounts(data.data);
-            setIsLoading(false);
         }
     }
 
     useEffect(() => {
+        setIsLoading(true);
         getAccountsInfo();
+        setIsLoading(false);
     }, []);
 
     useFocusEffect(
         useCallback(() => {
+            setIsLoading(true);
             getAccountsInfo();
+            setIsLoading(false);
             return () => {};
         }, [])
     );

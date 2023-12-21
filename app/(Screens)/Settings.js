@@ -2,12 +2,12 @@ import { useEffect } from 'react'
 import { View, ScrollView, SafeAreaView, Button } from 'react-native'
 import { Stack, useRouter } from 'expo-router'
 
-import { COLORS, icons, images, SIZES } from '../constants'
-import { ScreenHeaderBtn, BottomTabs, Groups } from '../components'
-import styles from '../components/common/common.style';
-import { useAuth } from '../utils/AuthContext'
+import { COLORS, icons, images, SIZES } from '../../constants'
+import { ScreenHeaderBtn, BottomTabs } from '../../components'
+import styles from '../../components/common/common.style';
+import { useAuth } from '../../utils/AuthContext'
 
-export default function Group() {
+export default function Settings() {
     const router = useRouter();
     const { isAuthenticated, clearToken } = useAuth();
 
@@ -22,8 +22,12 @@ export default function Group() {
             <Stack.Screen
                 options={{
                     headerStyle: { backgroundColor: COLORS.lightWhite },
+                    headerShadowVisible: false,
                     headerLeft: () => <></>,
-                    headerTitle: "Group",
+                    headerRight: () => (
+                        <ScreenHeaderBtn iconUrl={images.profile} dimension="100%" />
+                    ),
+                    headerTitle: "Settings",
                     headerTitleStyle: styles.headerText,
                     animation: "none"
                 }}
@@ -34,10 +38,15 @@ export default function Group() {
                     flex: 1,
                     padding: SIZES.medium
                 }}>
-                    <Groups />
+                    <Button
+                        title="Logout"
+                        onPress={() => {
+                            clearToken();
+                            router.replace('');
+                        }}
+                    />
                 </View>
             </ScrollView>
-            <BottomTabs screenName={"Group"} />
         </SafeAreaView>
     )
 }

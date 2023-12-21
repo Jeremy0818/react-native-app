@@ -2,12 +2,12 @@ import { useEffect } from 'react'
 import { View, ScrollView, SafeAreaView, Button } from 'react-native'
 import { Stack, useRouter } from 'expo-router'
 
-import { COLORS, icons, images, SIZES } from '../constants'
-import { Accounts, ScreenHeaderBtn, BottomTabs, SlidingMenu } from '../components'
-import styles from '../components/common/common.style';
-import { useAuth } from '../utils/AuthContext'
+import { COLORS, icons, images, SIZES } from '../../constants'
+import { Accounts, ScreenHeaderBtn } from '../../components'
+import styles from '../../components/common/common.style';
+import { useAuth } from '../../utils/AuthContext'
 
-export default function Overview() {
+export default function Home() {
     const router = useRouter();
     const { isAuthenticated } = useAuth();
 
@@ -26,9 +26,7 @@ export default function Overview() {
                     headerLeft: () => (
                         <ScreenHeaderBtn iconUrl={icons.menu} dimension="60%" />
                     ),
-                    headerRight: () => (
-                        <ScreenHeaderBtn iconUrl={images.profile} dimension="100%" />
-                    ),
+                    
                     headerTitle: "Overview",
                     headerTitleStyle: styles.headerText,
                     animation: "none",
@@ -55,7 +53,6 @@ export default function Overview() {
                     
                 </View>
             </ScrollView>
-            <BottomTabs screenName={"Overview"} />
         </SafeAreaView>
     )
 }

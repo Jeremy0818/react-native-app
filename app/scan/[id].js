@@ -247,7 +247,6 @@ const ScanView = () => {
                 options={{
                     headerStyle: { backgroundColor: COLORS.lightWhite },
                     headerShadowVisible: false,
-
                     headerLeft: () => (
                         <TouchableOpacity style={styles.headerBtn} onPress={() => { router.back() }}>
                             <Ionicons name="chevron-back" size={20} color={COLORS.white} />

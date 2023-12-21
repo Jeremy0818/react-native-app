@@ -13,7 +13,7 @@ export default function Landing() {
 
     useEffect(() => {
         if (isAuthenticated()) {
-            router.replace('Overview');
+            router.replace('Home');
         }
     }, [user]);
 

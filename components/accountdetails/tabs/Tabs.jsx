@@ -62,8 +62,8 @@ const Tabs = ({ tabs, activeTab, setActiveTab }) => {
                     marginBottom: 20,
                     height: 40,
                     position: "relative",
-                    backgroundColor: COLORS.gray2,
-                    borderRadius: SIZES.medium,
+                    backgroundColor: COLORS.gray,
+                    borderRadius: SIZES.xxLarge,
                 }}
             >
                 <Animated.View
@@ -74,7 +74,7 @@ const Tabs = ({ tabs, activeTab, setActiveTab }) => {
                         top: 0,
                         left: 0,
                         backgroundColor: COLORS.primary,
-                        borderRadius: SIZES.medium,
+                        borderRadius: SIZES.xxLarge,
                         transform: [
                             {
                                 translateX
@@ -98,7 +98,7 @@ const Tabs = ({ tabs, activeTab, setActiveTab }) => {
                     <Text
                         style={{
                             fontSize: SIZES.medium,
-                            color: activeTab === index ? "#fff" : COLORS.primary
+                            color: activeTab === index ? "#fff" : COLORS.gray2
                         }}
                     >
                         {item}

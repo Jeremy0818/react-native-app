@@ -44,8 +44,7 @@ const ContentView = ({ item, index, refreshing, onRefresh }) => {
 
 const AccountDetails = () => {
     const router = useRouter();
-    const params = useLocalSearchParams();
-    const { id = -1 } = params;
+    const { id = -1 } = useLocalSearchParams();
 
     const isCarousel = useRef(null);
 
@@ -68,6 +67,7 @@ const AccountDetails = () => {
         if (!isAuthenticated()) {
             router.replace("");
         }
+        if (!account) setIsLoading(true);
         getAccountInfo();
         if (isCarousel && isCarousel.current && isCarousel.current.currentIndex !== activeTab) {
             isCarousel.current.snapToItem(activeTab, animated = true, fireCallback = true)
@@ -76,6 +76,7 @@ const AccountDetails = () => {
 
     useFocusEffect(
         useCallback(() => {
+            if (!account) setIsLoading(true);
             getAccountInfo();
             if (isCarousel && isCarousel.current && isCarousel.current.currentIndex !== activeTab) {
                 isCarousel.current.snapToItem(activeTab, animated = true, fireCallback = true)
@@ -108,7 +109,6 @@ const AccountDetails = () => {
     }
 
     const getAccountInfo = async () => {
-        if (!account) setIsLoading(true);
         console.log(id);
         const { data, error } = await getAccount(id);
         if (error) {
@@ -123,12 +123,13 @@ const AccountDetails = () => {
             setIncCategories(data.data.income_categories);
             setTrnCategories(data.data.transfer_categories);
             setAccounts(data.data.accounts);
-            if (!account) setIsLoading(false);
+            setIsLoading(false);
         }
     }
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);
+        if (!account) setIsLoading(true);
         getAccountInfo();
         setTimeout(() => {
             setRefreshing(false);
@@ -141,6 +142,12 @@ const AccountDetails = () => {
                 options={{
                     headerStyle: { backgroundColor: COLORS.lightWhite },
                     headerShadowVisible: false,
+                    headerLeft: () => (
+                        <TouchableOpacity style={styles.headerBtn} onPress={() => { router.back() }}>
+                            <Ionicons name="chevron-back" size={20} color={COLORS.white} />
+                            <Text style={styles.headerBtnText}>back</Text>
+                        </TouchableOpacity>
+                    ),
                     headerRight: () => (
                         <TouchableOpacity>
                             <Ionicons name="create-outline" size={24} color={"black"} />
@@ -212,6 +219,18 @@ const styles = StyleSheet.create({
     headText: {
         fontSize: SIZES.large,
         color: COLORS.primary,
+        fontFamily: FONT.bold,
+    },
+    headerBtn: {
+        flexDirection: 'row',
+        backgroundColor: COLORS.primary,
+        color: COLORS.white,
+        padding: 10,
+        borderRadius: 10,
+    },
+    headerBtnText: {
+        fontSize: SIZES.medium,
+        color: COLORS.white,
         fontFamily: FONT.bold,
     },
 });
