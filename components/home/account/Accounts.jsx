@@ -70,7 +70,7 @@ const Accounts = () => {
                             />
                         )}
                         keyExtractor={item => item?.id}
-                        contentContainerStyle={{ columnGap: SIZES.medium }}
+                        contentContainerStyle={{ columnGap: SIZES.medium, padding: SIZES.medium }}
                         horizontal
                     />
                 )}

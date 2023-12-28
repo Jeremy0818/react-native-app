@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   },
   contentBox: {
     marginVertical: SIZES.small,
-    height: Dimensions.get('window').height * 0.5,
+    height: Dimensions.get('window').height * 0.46,
   },
   contextText: {
     fontSize: SIZES.medium - 2,

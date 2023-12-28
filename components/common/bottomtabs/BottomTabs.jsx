@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet, Animated, Dimensions } from 'react-native';
 import { AntDesign, Ionicons } from '@expo/vector-icons'; // Import icons from @expo/vector-icons or any other icon library
 import { useRouter, usePathname, useFocusEffect } from 'expo-router';
-import { COLORS, SIZES } from '../../../constants';
+import { COLORS, SIZES, SHADOWS } from '../../../constants';
 
 mainScreens = ["/Home", "/Analytics", "/Settings"];
 icons = ["home", "analytics", "settings"];
@@ -125,7 +125,7 @@ const BottomTabs = ({ }) => {
                 }}
             />
             {mainScreens.map((item, index) =>
-                <TouchableOpacity style={styles.tab} onPress={() => handlePress(item)} onLayout={event =>
+                <TouchableOpacity key={index} style={styles.tab} onPress={() => handlePress(item)} onLayout={event =>
                     setXTabs[index](event.nativeEvent.layout.x)
                 }>
                     <Ionicons name={icons[index]} size={36} color={activeScreen == item ? "white" : "grey"} />
@@ -163,6 +163,7 @@ const styles = StyleSheet.create({
         right: 0,
         borderRadius: SIZES.xxLarge,
         backgroundColor: COLORS.primary,
+        ...SHADOWS.medium,
     },
     text: (activeScreen, current) => ({
         color: activeScreen == current ? COLORS.white : COLORS.gray,

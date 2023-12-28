@@ -5,7 +5,9 @@ import * as SplashScreen from 'expo-splash-screen';
 import { PermanentMarker_400Regular } from '@expo-google-fonts/permanent-marker'
 
 import { AuthProvider, useAuth } from "../utils/AuthContext";
-import { BottomTabs } from '../components';
+import { BottomTabs, ScreenHeaderBtn } from '../components';
+import { COLORS, icons, images, SIZES } from '../constants';
+import styles from '../components/common/common.style';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -30,7 +32,52 @@ export default function Layout() {
 
     return (
         <AuthProvider>
-            <Stack onLayout={onLayoutRootView} />
+            <Stack onLayout={onLayoutRootView}>
+                <Stack.Screen
+                    name="index"
+                    options={{
+                        headerLeft: () => <></>,
+                        headerStyle: { backgroundColor: COLORS.lightWhite },
+                        headerShadowVisible: false,
+                        headerTitle: "Landing",
+                        headerTitleStyle: styles.headerText,
+                    }}
+                />
+                <Stack.Screen
+                    name="(Modals)/Login"
+                    options={{
+                        headerStyle: { backgroundColor: COLORS.lightWhite },
+                        headerShadowVisible: false,
+                        headerTitle: "Login",
+                        presentation: 'modal',
+                        headerTitleStyle: styles.headerText,
+                    }}
+                />
+                <Stack.Screen
+                    name="(Modals)/Register"
+                    options={{
+                        headerStyle: { backgroundColor: COLORS.lightWhite },
+                        headerShadowVisible: false,
+                        headerTitle: "Register",
+                        presentation: 'modal',
+                        headerTitleStyle: styles.headerText,
+                    }}
+                />
+                <Stack.Screen
+                    name="(Screens)/Settings"
+                    options={{
+                        headerStyle: { backgroundColor: COLORS.lightWhite },
+                        headerShadowVisible: false,
+                        headerLeft: () => <></>,
+                        headerRight: () => (
+                            <ScreenHeaderBtn iconUrl={images.profile} dimension="100%" />
+                        ),
+                        headerTitle: "Settings",
+                        headerTitleStyle: styles.headerText,
+                        animation: "none"
+                    }}
+                />
+            </Stack>
             <BottomTabs />
         </AuthProvider>
     )

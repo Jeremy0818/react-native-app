@@ -6,7 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { AccountTabs, Transaction, AccountFooter, SlidingMenuModal } from '../../components'
 import commonStyles from '../../components/common/common.style';
-import { COLORS, icons, SIZES, FONT } from '../../constants'
+import { COLORS, icons, SIZES, FONT, SHADOWS } from '../../constants'
 import { getAccount, updateTransaction, deleteTransaction } from '../../utils/RequestHelper'
 import { useAuth } from '../../utils/AuthContext'
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -14,21 +14,23 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 const tabs = ["Income", "Expense", "Transfer"];
 const SLIDER_WIDTH = Dimensions.get('window').width;
 const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 1);
+const SLIDER_HEIGHT = Dimensions.get('window').height * 0.56;
 
 const ContentView = ({ item, index, refreshing, onRefresh }) => {
     const scrollViewRef = useRef(null);
 
     return (
         <View style={{
-            height: Dimensions.get('window').height * 0.6,
+            height: SLIDER_HEIGHT,
             backgroundColor: COLORS.white,
             borderRadius: 10,
             margin: 8,
+            ...SHADOWS.small,
             shadowColor: 'black',
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.1,
-            shadowRadius: 10,
-            elevation: 5,
+            // shadowOffset: { width: 0, height: 2 },
+            // shadowOpacity: 0.1,
+            // shadowRadius: 10,
+            // elevation: 5,
         }}>
             <Transaction
                 data={item}
@@ -189,6 +191,7 @@ const AccountDetails = () => {
                         setIndex={setActiveTab}
                         onBeforeSnapToItem={(index) => setActiveTab(index)}
                         sliderWidth={SLIDER_WIDTH}
+                        sliderHeight={SLIDER_HEIGHT}
                         itemWidth={ITEM_WIDTH}
                         inactiveSlideShift={0}
                         useScrollView={true}

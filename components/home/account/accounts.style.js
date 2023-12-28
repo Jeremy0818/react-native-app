@@ -1,10 +1,14 @@
 import { StyleSheet } from "react-native";
 
-import { COLORS, FONT, SIZES } from "../../../constants";
+import { COLORS, FONT, SIZES, SHADOWS } from "../../../constants";
 
 const styles = StyleSheet.create({
   container: {
     marginTop: SIZES.xLarge,
+    backgroundColor: COLORS.white,
+    padding: SIZES.medium,
+    borderRadius: SIZES.small,
+    ...SHADOWS.small,
   },
   header: {
     flexDirection: "row",

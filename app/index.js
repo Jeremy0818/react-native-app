@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { SafeAreaView, TouchableOpacity, Text, View, StyleSheet } from 'react-native'
-import { Stack, useRouter } from 'expo-router'
+import { Link, Stack, useRouter } from 'expo-router'
 
 import { COLORS, FONT, SIZES } from '../constants'
 import { useAuth } from '../utils/AuthContext'
@@ -19,15 +19,7 @@ export default function Landing() {
 
     return (
             <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
-                <Stack.Screen
-                    options={{
-                        headerLeft: () => <></>,
-                        headerStyle: { backgroundColor: COLORS.lightWhite },
-                        headerShadowVisible: false,
-                        headerTitle: "Landing",
-                        headerTitleStyle: styles.headerText,
-                    }}
-                />
+                
                 <View style={styles.container}>
                     <AppLogo />
                     <TouchableOpacity

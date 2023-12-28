@@ -9,8 +9,8 @@ const styles = StyleSheet.create({
     backgroundColor: selectedAccount === account.id ? COLORS.primary : "#FFF",
     borderRadius: SIZES.medium,
     justifyContent: "space-between",
-    ...SHADOWS.medium,
-    shadowColor: COLORS.white,
+    ...SHADOWS.small,
+    // shadowColor: COLORS.white,
   }),
   logoContainer: (selectedJob, item) => ({
     width: 50,
@@ -24,18 +24,17 @@ const styles = StyleSheet.create({
     width: "70%",
     height: "70%",
   },
-  accountName: {
-    fontSize: SIZES.medium,
-    fontFamily: FONT.regular,
-    color: "#B3AEC6",
+  accountName: (selectedAccount, account) => ({
+    fontSize: SIZES.large,
+    fontFamily: FONT.bold,
+    color: selectedAccount === account.id ? COLORS.white : COLORS.primary,
     marginTop: SIZES.small / 1.5,
-  },
+  }),
   infoContainer: {
     marginTop: SIZES.large,
   },
   accountBalance: (selectedAccount, account) => ({
-    fontSize: SIZES.large,
-    fontFamily: FONT.medium,
+    fontSize: SIZES.medium,
     color: selectedAccount === account.id ? COLORS.white : COLORS.primary,
   }),
   infoWrapper: {
