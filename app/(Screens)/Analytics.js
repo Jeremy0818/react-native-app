@@ -1,9 +1,9 @@
 import { useEffect } from 'react'
-import { View, ScrollView, SafeAreaView, Text } from 'react-native'
+import { View, ScrollView } from 'react-native'
 import { Stack, useRouter } from 'expo-router'
 
 import { COLORS, icons, images, SIZES } from '../../constants'
-import { ScreenHeaderBtn, BottomTabs, Groups } from '../../components'
+import { ExpenseBreakdownChart, SpendingTrendChart, IncomeVsExpensesChart } from '../../components'
 import styles from '../../components/common/common.style';
 import { useAuth } from '../../utils/AuthContext'
 
@@ -18,7 +18,7 @@ export default function Analytics() {
     }, []);
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
+        <View style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
             <Stack.Screen
                 options={{
                     headerStyle: { backgroundColor: COLORS.lightWhite },
@@ -35,9 +35,11 @@ export default function Analytics() {
                     flex: 1,
                     padding: SIZES.medium
                 }}>
-                    <Text>Graphs</Text>
+                    <ExpenseBreakdownChart/>
+                    <SpendingTrendChart />
+                    <IncomeVsExpensesChart />
                 </View>
             </ScrollView>
-        </SafeAreaView>
+        </View>
     )
 }

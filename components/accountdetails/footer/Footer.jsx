@@ -1,20 +1,13 @@
 import React from 'react'
 import { View, Text, TouchableOpacity, Image, Linking } from 'react-native'
+import { Ionicons } from '@expo/vector-icons';
 
 import styles from './footer.style'
-import { icons } from '../../../constants'
+import { COLORS, icons } from '../../../constants'
 
 const Footer = ({ isOpen, handlePress }) => {
     return (
         <View style={styles.container}>
-            {/* <TouchableOpacity style={styles.likeBtn}>
-        <Image 
-          source={icons.heartOutline}
-          resizeMode='contain'
-          style={styles.likeBtnImage}
-        />
-      </TouchableOpacity> */}
-
             {
                 isOpen ?
                     <View style={{ height: styles.addBtn.height, }}>
@@ -26,6 +19,7 @@ const Footer = ({ isOpen, handlePress }) => {
                             style={styles.addBtn}
                             onPress={handlePress}
                         >
+                            <Ionicons name="md-add-circle-outline" size={24} color={COLORS.white} />
                             <Text style={styles.addBtnText}>Add transaction</Text>
                         </TouchableOpacity>
                     )

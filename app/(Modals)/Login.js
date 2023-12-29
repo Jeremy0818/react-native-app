@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, View, TextInput, TouchableOpacity, Text, Image, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, Image, KeyboardAvoidingView, Platform } from 'react-native';
 import { Stack, useRouter } from 'expo-router'
 import { Ionicons } from '@expo/vector-icons';
 
@@ -29,7 +29,7 @@ const Login = () => {
     };
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
+        <View style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
             <KeyboardAvoidingView
                 behavior='padding'
                 style={{ flex: 1 }}>
@@ -73,7 +73,7 @@ const Login = () => {
                     </View>
                 </View>
             </KeyboardAvoidingView>
-        </SafeAreaView>
+        </View>
     );
 };
 

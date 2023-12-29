@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         marginHorizontal: 10,
         position: 'relative',
-        bottom: 20,
+        bottom: 0,
         left: 0,
         right: 0,
         borderRadius: SIZES.xxLarge,

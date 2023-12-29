@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { View, ScrollView, SafeAreaView, Button } from 'react-native'
+import { View, ScrollView } from 'react-native'
 import { Stack, useRouter } from 'expo-router'
 
 import { COLORS, icons, images, SIZES } from '../../constants'
@@ -18,7 +18,7 @@ export default function Home() {
     }, []);
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
+        <View style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
             <Stack.Screen
                 options={{
                     headerStyle: { backgroundColor: COLORS.lightWhite },
@@ -39,20 +39,9 @@ export default function Home() {
                     padding: SIZES.medium
                 }}>
                     <Accounts />
-                    {/* <Welcome
-                        searchTerm={searchTerm}
-                        setSearchTerm={setSearchTerm}
-                        handleClick={() => {
-                            if (searchTerm) {
-                                router.push(`/search/${searchTerm}`)
-                            }
-                        }}
-                    />
-                    <Popularjobs />
-                    <Nearbyjobs /> */}
                     
                 </View>
             </ScrollView>
-        </SafeAreaView>
+        </View>
     )
 }

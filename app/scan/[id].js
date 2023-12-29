@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState, useRef } from 'react'
-import { Dimensions, View, Text, Image, TouchableOpacity, Linking, SafeAreaView, ActivityIndicator, StyleSheet, Modal } from 'react-native'
+import { Dimensions, View, Text, Image, TouchableOpacity, Linking, ActivityIndicator, StyleSheet, Modal } from 'react-native'
 import { Stack, useRouter, useLocalSearchParams } from 'expo-router'
 import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
@@ -242,7 +242,7 @@ const ScanView = () => {
     }
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
+        <View style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
             <Stack.Screen
                 options={{
                     headerStyle: { backgroundColor: COLORS.lightWhite },
@@ -295,7 +295,7 @@ const ScanView = () => {
                     }
                 </>
             )}
-        </SafeAreaView>
+        </View>
     )
 }
 

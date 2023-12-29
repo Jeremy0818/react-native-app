@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SafeAreaView, View, TextInput, TouchableOpacity, Text, Image, KeyboardAvoidingView } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, Image, KeyboardAvoidingView } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
 
 import { useAuth } from '../../utils/AuthContext';
@@ -25,7 +25,7 @@ const Register = () => {
     };
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
+        <View style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
             <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
                 <View style={styles.container}>
                     <View style={styles.inputContainer}>
@@ -76,7 +76,7 @@ const Register = () => {
                     </View>
                 </View>
             </KeyboardAvoidingView>
-        </SafeAreaView>
+        </View>
     );
 };
 

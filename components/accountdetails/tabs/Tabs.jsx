@@ -58,8 +58,7 @@ const Tabs = ({ tabs, activeTab, setActiveTab }) => {
             <View
                 style={{
                     flexDirection: "row",
-                    marginTop: 20,
-                    marginBottom: 20,
+                    marginTop: 10,
                     height: 40,
                     position: "relative",
                     backgroundColor: COLORS.gray,

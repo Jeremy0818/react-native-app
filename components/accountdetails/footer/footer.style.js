@@ -4,8 +4,8 @@ import { COLORS, FONT, SIZES } from "../../../constants";
 
 const styles = StyleSheet.create({
   container: {
-    padding: SIZES.small,
-    backgroundColor: COLORS.lightWhite,
+    paddingHorizontal: SIZES.small,
+    // backgroundColor: COLORS.lightWhite,
     justifyContent: "space-between",
     alignItems: "center",
     flexDirection: "row",
@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS.primary,
     height: 55,
+    flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: SIZES.medium,
@@ -22,6 +23,7 @@ const styles = StyleSheet.create({
     fontSize: SIZES.medium,
     color: COLORS.white,
     fontFamily: FONT.bold,
+    marginHorizontal: 10,
   },
 });
 

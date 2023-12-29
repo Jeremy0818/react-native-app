@@ -1,8 +1,10 @@
 import { Stack, useRouter } from "expo-router";
 import { useCallback, useState } from "react";
+import { SafeAreaView } from "react-native";
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
-import { PermanentMarker_400Regular } from '@expo-google-fonts/permanent-marker'
+import { PermanentMarker_400Regular } from '@expo-google-fonts/permanent-marker';
+import { Ionicons } from '@expo/vector-icons';
 
 import { AuthProvider, useAuth } from "../utils/AuthContext";
 import { BottomTabs, ScreenHeaderBtn } from '../components';
@@ -32,6 +34,9 @@ export default function Layout() {
 
     return (
         <AuthProvider>
+            <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
+
+            
             <Stack onLayout={onLayoutRootView}>
                 <Stack.Screen
                     name="index"
@@ -51,6 +56,9 @@ export default function Layout() {
                         headerTitle: "Login",
                         presentation: 'modal',
                         headerTitleStyle: styles.headerText,
+                        headerRight: () => (
+                            <Ionicons name="close-circle" size={28} onPress={() => router.back()}/>
+                        ),
                     }}
                 />
                 <Stack.Screen
@@ -61,6 +69,9 @@ export default function Layout() {
                         headerTitle: "Register",
                         presentation: 'modal',
                         headerTitleStyle: styles.headerText,
+                        headerRight: () => (
+                            <Ionicons name="close-circle" size={28} onPress={() => router.back()}/>
+                        ),
                     }}
                 />
                 <Stack.Screen
@@ -79,6 +90,7 @@ export default function Layout() {
                 />
             </Stack>
             <BottomTabs />
+            </SafeAreaView>
         </AuthProvider>
     )
 }

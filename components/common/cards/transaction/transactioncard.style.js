@@ -64,8 +64,8 @@ const styles = StyleSheet.create({
     height: SIZES.xxLarge,
   },
   iconLeft: {
-    width: 80,
-    height: 80,
+    width: 60,
+    height: 60,
     justifyContent: 'center',
     alignItems: 'center',
   },

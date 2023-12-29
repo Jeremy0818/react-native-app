@@ -4,34 +4,33 @@ import { COLORS, FONT, SHADOWS, SIZES } from "../../../../constants";
 
 const styles = StyleSheet.create({
   container: (selectedAccount, account) => ({
-    width: 200,
-    padding: SIZES.xLarge,
+    padding: SIZES.large,
     backgroundColor: selectedAccount === account.id ? COLORS.primary : "#FFF",
     borderRadius: SIZES.medium,
     justifyContent: "space-between",
     ...SHADOWS.small,
-    // shadowColor: COLORS.white,
   }),
-  logoContainer: (selectedJob, item) => ({
-    width: 50,
-    height: 50,
-    backgroundColor: selectedJob === item.job_id ? "#FFF" : COLORS.white,
-    borderRadius: SIZES.medium,
-    justifyContent: "center",
-    alignItems: "center",
-  }),
-  logoImage: {
-    width: "70%",
-    height: "70%",
-  },
+  // logoContainer: (selectedJob, item) => ({
+  //   width: 50,
+  //   height: 50,
+  //   backgroundColor: selectedJob === item.job_id ? "#FFF" : COLORS.white,
+  //   borderRadius: SIZES.medium,
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  // }),
+  // logoImage: {
+  //   width: "70%",
+  //   height: "70%",
+  // },
   accountName: (selectedAccount, account) => ({
     fontSize: SIZES.large,
     fontFamily: FONT.bold,
     color: selectedAccount === account.id ? COLORS.white : COLORS.primary,
-    marginTop: SIZES.small / 1.5,
+    marginHorizontal: 10,
   }),
   infoContainer: {
-    marginTop: SIZES.large,
+    flexDirection: "row",
+    // marginTop: SIZES.medium,
   },
   accountBalance: (selectedAccount, account) => ({
     fontSize: SIZES.medium,

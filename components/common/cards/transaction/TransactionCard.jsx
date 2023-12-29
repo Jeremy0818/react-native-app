@@ -120,7 +120,7 @@ const TransactionCard = ({ edit, scrollViewRef, transaction, selectedTransaction
                 >
                     <View style={styles.container}>
                         <View style={styles.iconLeft}>
-                            <Ionicons name="image" size={24} color={"black"} />
+                            <Ionicons name={transaction.category == "Groceries" ? "cart" : "image"} size={24} color={"black"} />
                         </View>
                         <View style={styles.content}>
                             <Text

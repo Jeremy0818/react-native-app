@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { View, ScrollView, SafeAreaView, Button, Text, StyleSheet, TouchableOpacity, SectionList } from 'react-native';
+import { View, Button, Text, StyleSheet, TouchableOpacity, SectionList } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -67,7 +67,7 @@ export default function Settings() {
       };
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
+        <View style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
             <View style={{
                 flex: 1,
                 padding: SIZES.medium
@@ -91,7 +91,7 @@ export default function Settings() {
                     }}
                 />
             </View>
-        </SafeAreaView>
+        </View>
     )
 }
 

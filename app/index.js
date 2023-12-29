@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { SafeAreaView, TouchableOpacity, Text, View, StyleSheet } from 'react-native'
+import { TouchableOpacity, Text, View, StyleSheet } from 'react-native'
 import { Link, Stack, useRouter } from 'expo-router'
 
 import { COLORS, FONT, SIZES } from '../constants'
@@ -18,24 +18,22 @@ export default function Landing() {
     }, [user]);
 
     return (
-            <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
-                
-                <View style={styles.container}>
-                    <AppLogo />
-                    <TouchableOpacity
-                        onPress={() => router.push('Login')}
-                        style={styles.btn}
-                    >
-                        <Text style={styles.text}>Login</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => router.push('Register')}
-                        style={styles.btn}
-                    >
-                        <Text style={styles.text}>Register</Text>
-                    </TouchableOpacity>
-                </View>
-
-            </SafeAreaView>
+        <View style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
+            <View style={styles.container}>
+                <AppLogo />
+                <TouchableOpacity
+                    onPress={() => router.push('Login')}
+                    style={styles.btn}
+                >
+                    <Text style={styles.text}>Login</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => router.push('Register')}
+                    style={styles.btn}
+                >
+                    <Text style={styles.text}>Register</Text>
+                </TouchableOpacity>
+            </View>
+        </View>
     )
 }

@@ -12,25 +12,16 @@ import { useAuth } from '../../utils/AuthContext'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const tabs = ["Income", "Expense", "Transfer"];
-const SLIDER_WIDTH = Dimensions.get('window').width;
-const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 1);
-const SLIDER_HEIGHT = Dimensions.get('window').height * 0.56;
 
 const ContentView = ({ item, index, refreshing, onRefresh }) => {
     const scrollViewRef = useRef(null);
 
     return (
         <View style={{
-            height: SLIDER_HEIGHT,
-            backgroundColor: COLORS.white,
-            borderRadius: 10,
-            margin: 8,
-            ...SHADOWS.small,
-            shadowColor: 'black',
-            // shadowOffset: { width: 0, height: 2 },
-            // shadowOpacity: 0.1,
-            // shadowRadius: 10,
-            // elevation: 5,
+            // height: Dimensions.get('window').height * 0.5,
+            // marginHorizontal: "5%",
+            // ...SHADOWS.small,
+            // shadowColor: 'black',
         }}>
             <Transaction
                 data={item}
@@ -63,7 +54,22 @@ const AccountDetails = () => {
     const [trnCategories, setTrnCategories] = useState([]);
     const [accounts, setAccounts] = useState([]);
 
+    const [SLIDER_WIDTH, setSliderWidth] = useState(Dimensions.get('window').width);
+    const [ITEM_WIDTH, setItemWidth] = useState(Math.round(Dimensions.get('window').width));
+
     const { isAuthenticated } = useAuth();
+
+    const onOrientationChange = () => {
+        const { width, height } = Dimensions.get('window');
+        if (width < height) {
+            setSliderWidth(Dimensions.get('window').width);
+        setItemWidth(Math.round(Dimensions.get('window').width));
+        } else {
+            setSliderWidth(Dimensions.get('window').width * 0.9);
+        setItemWidth(Math.round(Dimensions.get('window').width * 0.9));
+        }
+        
+    };
 
     useEffect(() => {
         if (!isAuthenticated()) {
@@ -74,6 +80,10 @@ const AccountDetails = () => {
         if (isCarousel && isCarousel.current && isCarousel.current.currentIndex !== activeTab) {
             isCarousel.current.snapToItem(activeTab, animated = true, fireCallback = true)
         }
+        Dimensions.addEventListener('change', onOrientationChange);
+        // return () => {
+        //   Dimensions.removeEventListener('change', onOrientationChange);
+        // };
     }, []);
 
     useFocusEffect(
@@ -139,7 +149,7 @@ const AccountDetails = () => {
     });
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
+        <View style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
             <Stack.Screen
                 options={{
                     headerStyle: { backgroundColor: COLORS.lightWhite },
@@ -154,7 +164,7 @@ const AccountDetails = () => {
                         <TouchableOpacity>
                             <Ionicons name="create-outline" size={24} color={"black"} />
                         </TouchableOpacity>
-                        
+
                     ),
                     headerTitle: account ? account.account_name : '',
                     headerTitleStyle: commonStyles.headerText,
@@ -163,7 +173,7 @@ const AccountDetails = () => {
 
 
             {isLoading ? (
-                <ActivityIndicator size="large" color={COLORS.primary} />
+                <ActivityIndicator size="large" color={COLORS.black} />
             ) : error ? (
                 <Text>Something went wrong</Text>
             ) : (
@@ -191,30 +201,45 @@ const AccountDetails = () => {
                         setIndex={setActiveTab}
                         onBeforeSnapToItem={(index) => setActiveTab(index)}
                         sliderWidth={SLIDER_WIDTH}
-                        sliderHeight={SLIDER_HEIGHT}
                         itemWidth={ITEM_WIDTH}
                         inactiveSlideShift={0}
-                        useScrollView={true}
+                    // useScrollView={true}
                     />
-                    <Pagination
-                        dotsLength={3}
-                        activeDotIndex={activeTab}
-                        carouselRef={isCarousel}
-                        dotStyle={{
-                            width: 10,
-                            height: 10,
-                            borderRadius: 5,
-                            marginHorizontal: 0,
-                            backgroundColor: 'rgba(0, 0, 0, 0.92)'
-                        }}
-                        inactiveDotOpacity={0.4}
-                        inactiveDotScale={0.6}
-                        tappableDots={true}
-                    />
+                    <View style={{
+                        flex: 1,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        marginVertical: 15,
+                    }}>
+                        <Pagination
+                            dotsLength={3}
+                            activeDotIndex={activeTab}
+                            carouselRef={isCarousel}
+                            containerStyle={{
+                                height: 20,
+                                width: 80,
+                            }}
+                            dotStyle={{
+                                width: 20,
+                                height: 15,
+                                borderRadius: 8,
+                                backgroundColor: 'rgba(0, 0, 0, 0.92)'
+                            }}
+                            inactiveDotStyle={{
+                                width: 15,
+                                height: 15,
+                                borderRadius: 8,
+                                backgroundColor: 'rgba(0, 0, 0, 0.92)'
+                            }}
+                            inactiveDotOpacity={0.4}
+                            inactiveDotScale={0.6}
+                            tappableDots={true}
+                        />
+                    </View>
                     <SlidingMenuModal accountId={id} />
                 </>
             )}
-        </SafeAreaView>
+        </View>
     )
 }
 

@@ -33,9 +33,8 @@ const SlidingMenu = ({ renderComponent }) => {
             enablePanDownToClose={false}
             index={0}
             style={styles.sheetContainer}
-
         >
-            <Text style={styles.headerText}>Transactions</Text>
+            {/* <Text style={styles.headerText}>Transactions</Text> */}
             <BottomSheetScrollView contentContainerStyle={styles.contentContainer}>
                 
                 {renderComponent()}
@@ -47,11 +46,11 @@ const SlidingMenu = ({ renderComponent }) => {
 const styles = StyleSheet.create({
     sheetContainer: {
         // add horizontal space
-        // marginHorizontal: SIZES.medium,
+        // marginHorizontal: SIZES.small,
     },
     contentContainer: {
-        backgroundColor: COLORS.white,
-        borderRadius: 10,
+        // backgroundColor: COLORS.white,
+        // borderRadius: 10,
         margin: 8,
     },
     headerText: {
