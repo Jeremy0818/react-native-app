@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { LineChart } from 'react-native-chart-kit';
 import { Dimensions, View, Text, Animated, StyleSheet, TouchableOpacity } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
-import { COLORS, SHADOWS } from '../../constants';
+import { COLORS, SHADOWS, SIZES } from '../../constants';
 import {default as cardStyles} from '../common/card.style';
 
 const SpendingTrendChart = () => {
@@ -84,7 +85,7 @@ const SpendingTrendChart = () => {
                 <View style={styles.header}>
                     <Text style={styles.headerTitle}>Monthly Spending Trend</Text>
                     <TouchableOpacity>
-                        <Text style={styles.headerBtn}>details</Text>
+                    <Ionicons name='ios-expand' size={SIZES.large} color={styles.headerBtn.color}/>
                     </TouchableOpacity>
                 </View>
 

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { StackedBarChart, BarChart } from 'react-native-chart-kit';
 import { Dimensions, View, Text, Animated, TouchableOpacity } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 import styles from '../common/card.style';
-import { COLORS } from '../../constants';
+import { COLORS, SIZES } from '../../constants';
 
 const screenWidth = Dimensions.get('window').width * 0.9;
 
@@ -66,7 +67,7 @@ const IncomeVsExpensesChart = () => {
                 <View style={styles.header}>
                     <Text style={styles.headerTitle}>Income vs Expenses</Text>
                     <TouchableOpacity>
-                        <Text style={styles.headerBtn}>details</Text>
+                    <Ionicons name='ios-expand' size={SIZES.large} color={styles.headerBtn.color}/>
                     </TouchableOpacity>
                 </View>
 

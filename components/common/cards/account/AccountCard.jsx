@@ -6,9 +6,8 @@ import styles from './accountcard.style'
 
 const AccountCard = ({ account, selectedAccount, handleCardPress }) => {
     return (
-        <TouchableOpacity
+        <View
             style={styles.container(selectedAccount, account)}
-            onPress={() => handleCardPress(account)}
         >
             <View style={styles.infoContainer}>
                 <Text style={styles.accountName(selectedAccount, account)}>{account.account_name}</Text>
@@ -20,7 +19,10 @@ const AccountCard = ({ account, selectedAccount, handleCardPress }) => {
                     {account.balance}
                 </Text>
             </View>
-        </TouchableOpacity>
+            <TouchableOpacity style={styles.infoBtn(selectedAccount, account)} onPress={() => handleCardPress(account)}>
+                <Text style={styles.infoBtnText(selectedAccount, account)}>View</Text>
+            </TouchableOpacity>
+        </View>
     )
 }
 

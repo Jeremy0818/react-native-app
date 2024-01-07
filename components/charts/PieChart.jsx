@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { PieChart } from 'react-native-chart-kit';
 import { View, Text, Dimensions, Animated, TouchableOpacity } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+
 import { COLORS, SHADOWS, SIZES } from '../../constants';
 import styles from '../common/card.style';
 
@@ -67,7 +69,7 @@ const ExpenseBreakdownChart = () => {
                 <View style={styles.header}>
                     <Text style={styles.headerTitle}>Expense Breakdown</Text>
                     <TouchableOpacity>
-                        <Text style={styles.headerBtn}>details</Text>
+                        <Ionicons name='ios-expand' size={SIZES.large} color={styles.headerBtn.color}/>
                     </TouchableOpacity>
                 </View>
 

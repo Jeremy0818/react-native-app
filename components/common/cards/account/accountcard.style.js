@@ -32,6 +32,16 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     // marginTop: SIZES.medium,
   },
+  infoBtn:  (selectedAccount, account) => ({
+    backgroundColor: selectedAccount === account.id ? COLORS.white : COLORS.primary,
+    borderRadius: SIZES.medium,
+    padding: 5,
+    marginTop: SIZES.medium,
+  }),
+  infoBtnText:  (selectedAccount, account) => ({
+    textAlign: "center",
+    color: selectedAccount === account.id ? COLORS.primary : COLORS.white,
+  }),
   accountBalance: (selectedAccount, account) => ({
     fontSize: SIZES.medium,
     color: selectedAccount === account.id ? COLORS.white : COLORS.primary,
