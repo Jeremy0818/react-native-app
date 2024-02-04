@@ -1,5 +1,6 @@
 {
   "expo": {
+    "icon": "./assets/icons/wallet-icon.jpeg",
     "scheme": "acme",
     "web": {
       "bundler": "metro"

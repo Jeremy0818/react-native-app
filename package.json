@@ -7,7 +7,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "build-ios": "eas build -p ios"
+    "build-ios": "eas build -p ios",
+    "icon": "expo customize:icons"
   },
   "dependencies": {
     "@expo-google-fonts/pacifico": "^0.2.3",
