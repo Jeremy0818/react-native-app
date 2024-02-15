@@ -42,7 +42,7 @@ function AuthProvider({ children }) {
   };
 
   const isAuthenticated = () => {
-    return user && user.userInfo
+    return user // && user.userInfo
   }
 
   // Handle token refresh when token is about to expire

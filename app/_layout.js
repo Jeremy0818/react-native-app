@@ -75,6 +75,19 @@ export default function Layout() {
                     }}
                 />
                 <Stack.Screen
+                    name="(Modals)/NewAccount"
+                    options={{
+                        headerStyle: { backgroundColor: COLORS.lightWhite },
+                        headerShadowVisible: false,
+                        headerTitle: "Create New Account",
+                        presentation: 'modal',
+                        headerTitleStyle: styles.headerText,
+                        headerRight: () => (
+                            <Ionicons name="close-circle" size={28} onPress={() => router.back()}/>
+                        ),
+                    }}
+                />
+                <Stack.Screen
                     name="(Screens)/Settings"
                     options={{
                         headerStyle: { backgroundColor: COLORS.lightWhite },

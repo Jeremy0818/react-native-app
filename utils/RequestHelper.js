@@ -165,6 +165,41 @@ export const deleteTransaction = async (id, transaction) => {
     }
 }
 
+export const newAccount = async (accName, balance) => {
+    try {
+        // First, obtain the CSRF token
+        const csrfResponse = await axios.get(host + '/api/get-csrf-token/');
+        const csrfToken = csrfResponse.data.csrfToken;
+
+        const { token, refreshToken } = await getToken();
+
+        // Create custom headers with the refresh token and CSRF token
+        const customHeaders = {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken,
+        };
+
+        // Include the CSRF token in your requests
+        const response = await axios.post(host + '/api/account/',
+            JSON.stringify({ "account_name": accName, "balance": balance }),
+            {
+                headers: customHeaders,
+            }
+        );
+
+        if (response.status === 200) {
+            // Login successful
+            return { data: response.data, error: null };
+        } else {
+            // Login failed
+            throw { data: null, error: new Error('Create new account failed') };
+        }
+    } catch (error) {
+        return { data: null, error: error };
+    }
+}
+
 export const getAllAccount = async () => {
     try {
         // First, obtain the CSRF token

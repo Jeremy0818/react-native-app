@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
     fontFamily: FONT.bold,
     color: selectedAccount === account.id ? COLORS.white : COLORS.primary,
     marginHorizontal: 10,
+    width: 120,
   }),
   infoContainer: {
     flexDirection: "row",
@@ -43,8 +44,9 @@ const styles = StyleSheet.create({
     color: selectedAccount === account.id ? COLORS.primary : COLORS.white,
   }),
   accountBalance: (selectedAccount, account) => ({
-    fontSize: SIZES.medium,
+    fontSize: SIZES.large,
     color: selectedAccount === account.id ? COLORS.white : COLORS.primary,
+    padding: SIZES.xSmall,
   }),
   infoWrapper: {
     flexDirection: "row",
