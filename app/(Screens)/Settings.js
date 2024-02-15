@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { View, Button, Text, StyleSheet, TouchableOpacity, SectionList } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, SectionList } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -83,13 +83,22 @@ export default function Settings() {
                     style={styles.container}
                     stickySectionHeadersEnabled={false}
                 />
-                <Button
-                    title="Logout"
+                <TouchableOpacity
+                    style={{
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        backgroundColor: 'red',
+                        padding: 10,
+                        marginHorizontal: 100,
+                        borderRadius: 20,
+                    }}
                     onPress={() => {
                         clearToken();
                         router.replace('');
                     }}
-                />
+                    >
+                        <Text>LOGOUT</Text>
+                </TouchableOpacity>
             </View>
         </View>
     )

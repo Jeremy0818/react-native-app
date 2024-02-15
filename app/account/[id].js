@@ -17,12 +17,7 @@ const ContentView = ({ item, index, refreshing, onRefresh }) => {
     const scrollViewRef = useRef(null);
 
     return (
-        <View style={{
-            // height: Dimensions.get('window').height * 0.5,
-            // marginHorizontal: "5%",
-            // ...SHADOWS.small,
-            // shadowColor: 'black',
-        }}>
+        <View>
             <Transaction
                 data={item}
                 scrollViewRef={scrollViewRef}
@@ -161,7 +156,13 @@ const AccountDetails = () => {
                         </TouchableOpacity>
                     ),
                     headerRight: () => (
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => {
+                            router.push({pathname: `UpdateAccountDetails`, params: {
+                                id: id,
+                                name: account.account_name,
+                                balance: account.balance,
+                            }})
+                        }}>
                             <Ionicons name="create-outline" size={24} color={"black"} />
                         </TouchableOpacity>
 

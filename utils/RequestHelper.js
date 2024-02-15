@@ -264,6 +264,72 @@ export const getAccount = async (id) => {
     }
 }
 
+export const updateAccountDetails = async (id, name, balance) => {
+    try {
+        // First, obtain the CSRF token
+        const csrfResponse = await axios.get(host + '/api/get-csrf-token/');
+        const csrfToken = csrfResponse.data.csrfToken;
+
+        const { token, refreshToken } = await getToken();
+
+        // Create custom headers with the refresh token and CSRF token
+        const customHeaders = {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken,
+        };
+
+        const response = await axios.put(host + '/api/account/' + id + '/', 
+        JSON.stringify({ "account_name": name, "balance": balance }), 
+        {
+            headers: customHeaders,
+        });
+
+        const data = response.data;
+
+        if (data.error) {
+            console.log(data.error);
+            return { data: null, error: data.error };
+        }
+
+        return { data: data, error: null };
+    } catch (error) {
+        return { data: null, error: error };
+    }
+}
+
+export const deleteAccount = async (id) => {
+    try {
+        // First, obtain the CSRF token
+        const csrfResponse = await axios.get(host + '/api/get-csrf-token/');
+        const csrfToken = csrfResponse.data.csrfToken;
+
+        const { token, refreshToken } = await getToken();
+
+        // Create custom headers with the refresh token and CSRF token
+        const customHeaders = {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken,
+        };
+
+        const response = await axios.delete(host + '/api/account/' + id + '/',
+        {
+            headers: customHeaders,
+        });
+
+        const data = response.data;
+
+        if (data.error) {
+            console.log(data.error);
+            return { data: null, error: data.error };
+        }
+
+        return { data: data, error: null };
+    } catch (error) {
+        return { data: null, error: error };
+    }
+}
 
 export const login = async (username, password) => {
     try {

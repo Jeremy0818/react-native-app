@@ -1,21 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { View, TextInput, TouchableOpacity, Text, Image, KeyboardAvoidingView, Platform } from 'react-native';
-import { Stack, useRouter } from 'expo-router'
+import { Stack, useRouter, useLocalSearchParams } from 'expo-router'
 import { Ionicons } from '@expo/vector-icons';
 
 import { useAuth } from '../../utils/AuthContext';
 import { COLORS, icons } from '../../constants';
 import styles from '../../components/common/common.style';
-import { newAccount } from '../../utils/RequestHelper';
+import { updateAccountDetails, deleteAccount } from '../../utils/RequestHelper';
 
-const NewAccount = () => {
+const NewAccount = ({ route }) => {
     const router = useRouter();
-    const [accName, setAccName] = useState('');
-    const [balance, setBalance] = useState('0');
+    const params = useLocalSearchParams();
+
+    const [accName, setAccName] = useState(params.name);
+    const [balance, setBalance] = useState(params.balance);
     const [accNameIsEmpty, setAccNameIsEmpty] = useState(false);
     const [balanceIsEmpty, setbalanceIsEmpty] = useState(false);
 
-    const addNewAccount = async () => {
+    const updateAccount = async () => {
         isEmpty = false;
         if (accName.length == 0) {
             setAccNameIsEmpty(true);
@@ -26,11 +28,20 @@ const NewAccount = () => {
             isEmpty = true;
         }
         if (isEmpty) return;
-        let result = await newAccount(accName, balance);
+        let result = await updateAccountDetails(params.id, accName, balance);
         if (result.error) {
             alert(result.error);
         } else {
             router.back();
+        }
+    };
+
+    const deleteAcc = async () => {
+        let result = await deleteAccount(params.id);
+        if (result.error) {
+            alert(result.error);
+        } else {
+            router.replace('Home');
         }
     };
 
@@ -68,12 +79,12 @@ const NewAccount = () => {
                             {balanceIsEmpty && <Text style={{ color: 'red' }}>Field cannot be empty</Text>}
                         </View>
 
-                        <TouchableOpacity style={styles.btn} onPress={addNewAccount}>
-                            <Image
-                                source={icons.chevronRight}
-                                resizeMode='contain'
-                                style={styles.btnImage}
-                            />
+                        <TouchableOpacity style={styles.btn} onPress={updateAccount}>
+                            <Text style={styles.text}>Update</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={{...styles.btn, backgroundColor: 'red', }} onPress={deleteAcc}>
+                            <Text style={styles.text}>Delete</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
