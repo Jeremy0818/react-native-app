@@ -88,6 +88,19 @@ export default function Layout() {
                     }}
                 />
                 <Stack.Screen
+                    name="(Modals)/NewBudget"
+                    options={{
+                        headerStyle: { backgroundColor: COLORS.lightWhite },
+                        headerShadowVisible: false,
+                        headerTitle: "Create New Budget",
+                        presentation: 'modal',
+                        headerTitleStyle: styles.headerText,
+                        headerRight: () => (
+                            <Ionicons name="close-circle" size={28} onPress={() => router.back()}/>
+                        ),
+                    }}
+                />
+                <Stack.Screen
                     name="(Modals)/UpdateAccountDetails"
                     options={{
                         headerStyle: { backgroundColor: COLORS.lightWhite },

@@ -181,7 +181,7 @@ export const newAccount = async (accName, balance) => {
         };
 
         // Include the CSRF token in your requests
-        const response = await axios.post(host + '/api/account/',
+        const response = await axios.put(host + '/api/account/',
             JSON.stringify({ "account_name": accName, "balance": balance }),
             {
                 headers: customHeaders,
@@ -279,7 +279,7 @@ export const updateAccountDetails = async (id, name, balance) => {
             'X-CSRFToken': csrfToken,
         };
 
-        const response = await axios.put(host + '/api/account/' + id + '/', 
+        const response = await axios.post(host + '/api/account/' + id + '/', 
         JSON.stringify({ "account_name": name, "balance": balance }), 
         {
             headers: customHeaders,
@@ -360,3 +360,137 @@ export const login = async (username, password) => {
         return { data: null, error: error };
     }
 };
+
+export const getAllBudget = async () => {
+    try {
+        // First, obtain the CSRF token
+        const csrfResponse = await axios.get(host + '/api/get-csrf-token/');
+        const csrfToken = csrfResponse.data.csrfToken;
+
+        const { token, refreshToken } = await getToken();
+
+        // Create custom headers with the refresh token and CSRF token
+        const customHeaders = {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken,
+        };
+
+        const response = await axios.get(host + '/api/budget/', {
+            headers: customHeaders,
+        });
+
+        const data = response.data;
+
+        if (data.error) {
+            console.log(data.error);
+            return { data: null, error: data.error };
+        }
+
+        return { data: data, error: null };
+    } catch (error) {
+        return { data: null, error: error };
+    }
+};
+
+export const newBudget = async (categoryName, maxAmount) => {
+    try {
+        // First, obtain the CSRF token
+        const csrfResponse = await axios.get(host + '/api/get-csrf-token/');
+        const csrfToken = csrfResponse.data.csrfToken;
+
+        const { token, refreshToken } = await getToken();
+
+        // Create custom headers with the refresh token and CSRF token
+        const customHeaders = {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken,
+        };
+
+        // Include the CSRF token in your requests
+        const response = await axios.put(host + '/api/budget/',
+            JSON.stringify({ "category_name": categoryName, "budget": maxAmount }),
+            {
+                headers: customHeaders,
+            }
+        );
+
+        if (response.status === 200) {
+            // Login successful
+            return { data: response.data, error: null };
+        } else {
+            // Login failed
+            throw { data: null, error: new Error('Create new account failed') };
+        }
+    } catch (error) {
+        return { data: null, error: error };
+    }
+};
+
+export const updateBudgetMax = async (id, max) => {
+    try {
+        // First, obtain the CSRF token
+        const csrfResponse = await axios.get(host + '/api/get-csrf-token/');
+        const csrfToken = csrfResponse.data.csrfToken;
+
+        const { token, refreshToken } = await getToken();
+
+        // Create custom headers with the refresh token and CSRF token
+        const customHeaders = {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken,
+        };
+
+        const response = await axios.post(host + '/api/budget/' + id + '/', 
+        JSON.stringify({ "budget": max }), 
+        {
+            headers: customHeaders,
+        });
+
+        const data = response.data;
+
+        if (data.error) {
+            console.log(data.error);
+            return { data: null, error: data.error };
+        }
+
+        return { data: data, error: null };
+    } catch (error) {
+        return { data: null, error: error };
+    }
+}
+
+export const deleteBudget = async (id) => {
+    try {
+        // First, obtain the CSRF token
+        const csrfResponse = await axios.get(host + '/api/get-csrf-token/');
+        const csrfToken = csrfResponse.data.csrfToken;
+
+        const { token, refreshToken } = await getToken();
+
+        // Create custom headers with the refresh token and CSRF token
+        const customHeaders = {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken,
+        };
+
+        const response = await axios.delete(host + '/api/account/' + id + '/',
+        {
+            headers: customHeaders,
+        });
+
+        const data = response.data;
+
+        if (data.error) {
+            console.log(data.error);
+            return { data: null, error: data.error };
+        }
+
+        return { data: data, error: null };
+    } catch (error) {
+        return { data: null, error: error };
+    }
+}
